@@ -1,0 +1,251 @@
+ID,name,email,phone,status,donorType,isRecurringDonor,isHNI
+096f4a69-87f3-42f1-a3a6-9b32bc697a76,Rodriguez Charitable Foundation,rodriguez.charitable.foundation@aol.com,(212) 931-1283,Active,Foundation,true,false
+9c8cee82-e38e-42f7-8df3-6c68699ff47f,Mitchell Financial Services,mitchell.financial.services@outlook.com,(415) 465-5939,In-Active,Corporate,false,true
+57cf1430-9843-4255-ad1a-757a38ea7883,Lewis Trust USA,lewis.trust571@outlook.com,(310) 225-3756,Active,Foundation,false,true
+f1889597-96b9-47ec-a894-8275b64398a1,Nguyen Educational Foundation USA,nguyen.educational.foundation234@yahoo.com,(510) 531-4473,Active,Foundation,true,true
+f466e469-f9a4-404c-acb1-d5beb93d23ee,Harris Financial Services USA,harris.financial.services@yahoo.com,(404) 922-2681,Active,Corporate,false,true
+5a54ce74-0773-4fd8-b718-ec0c1a5a4275,Morgan Financial Services USA,morgan.financial.services833@gmail.com,(323) 301-4638,In-Active,Corporate,false,false
+66f5d877-09e6-49c4-a089-c5303cf397fc,Morgan Financial Services,morgan.financial.services999@yahoo.com,(305) 278-3722,Active,Corporate,true,false
+f5f74f56-3b59-442f-a5f7-ed3232e6e67f,Lewis Trust,lewis.trust488@gmail.com,(703) 956-3051,Active,Foundation,true,false
+614b55d4-eedf-4e5d-9f3c-903b16e9cd45,Rodriguez Charitable Foundation USA,rodriguez.charitable.foundation@yahoo.com,(202) 290-3574,Active,Foundation,false,false
+bb2fe338-914d-449f-be34-5ee715788638,Ken Johnson,kenneth.johnson@aol.com,(818) 952-2568,Active,Individual,true,false
+2ace33e6-ea40-40e4-85c5-a6dd180d7c30,Nguyen Educational Foundation,nguyen.educational.foundation@aol.com,(212) 857-3776,Active,Foundation,true,false
+f14698bd-d9ab-47fe-aaf2-b9e9961ecda1,Harris Financial Services,harris.financial.services@icloud.com,(704) 808-2663,In-Active,Corporate,false,false
+181140b1-fcbe-4087-bda8-7ab19fee657b,Kenneth Johnson,kenneth.johnson865@hotmail.com,(916) 353-8047,Active,Individual,false,false
+bc565696-d356-41f6-a7ef-544755ce255e,Mitchell Financial Services USA,mitchell.financial.services@icloud.com,(916) 653-2499,In-Active,Corporate,true,true
+c2daf01b-0b1b-4ee7-bd5c-35beb088668c,Jeffrey Wright,jeffrey.wright749@icloud.com,(818) 263-3849,Active,Individual,false,false
+6acde6b1-2552-4aba-bf73-f608186946c1,Rivera Enterprises,rivera.enterprises143@outlook.com,(703) 120-4339,In-Active,Corporate,true,false
+313a1e4d-4391-4ace-a169-6b5eb7ae79c2,Kimberly Ramirez,kimberly.ramirez@outlook.com,(415) 655-3769,In-Active,Individual,false,true
+7febbcb4-0bc6-448d-8c1e-d57a25f1ec0d,Brown Scholarship Foundation,brown.scholarship.foundation@gmail.com,(310) 685-7924,Active,Foundation,false,false
+8137b703-e275-4d24-9a4d-9a144a835fa9,Cook Memorial Foundation,cook.memorial.foundation937@gmail.com,(323) 198-2169,In-Active,Foundation,true,false
+13728bd7-890d-4dba-accb-e985937fd897,Kevin White,kevin.white486@outlook.com,(212) 212-3707,Active,Individual,true,false
+aef413b9-4da4-4499-884c-92bbeb3e6d74,Mitchell International,mitchell.international@gmail.com,(617) 775-5670,Active,Corporate,true,true
+90beb73e-582c-4daf-9d11-41611b4aa0d9,Lisa Sanchez,lisa.sanchez@yahoo.com,(650) 825-5762,Active,Individual,false,false
+768b031f-da3f-49c2-9aa7-db5861b9a17b,White Family Foundation,white.family.foundation205@outlook.com,(214) 314-1501,Active,Foundation,true,false
+103510cb-c0d5-4ce9-bb8e-0674167aecb9,Torres Manufacturing,torres.manufacturing@hotmail.com,(818) 949-1835,Active,Corporate,false,true
+53acd167-5eec-411a-969a-f129de465a1f,Eric Anderson,eric.anderson@icloud.com,(404) 580-3243,Active,Individual,true,false
+3ee4c331-c2f1-4266-a0cb-6c4ac2397136,Eric Murphy,eric.murphy770@aol.com,(617) 127-6356,Active,Individual,true,true
+0ce67f2e-10e8-4d51-8d0d-d2cab942789d,Carol Brown,carol.brown956@aol.com,(214) 188-3069,In-Active,Individual,false,false
+dba19fe9-5da0-4dd6-81ad-627b82a612f4,Baker Foundation,baker.foundation849@outlook.com,(305) 274-3399,In-Active,Foundation,true,false
+9cddfbbb-cdcd-4b74-9dc1-3071d11129ac,Rogers Group LLC,rogers.group.llc279@outlook.com,(713) 905-8629,Active,Corporate,true,true
+6200a3a0-1128-4a0a-8e8a-84daaa41a1a0,Gutierrez Charitable Foundation,gutierrez.charitable.foundation189@hotmail.com,(212) 158-5713,Active,Foundation,true,true
+554ce2be-ee60-4db6-926e-d642e3efa0bc,Helen Collins,helen.collins652@yahoo.com,(212) 890-6110,Active,Individual,true,false
+40389cb1-b62b-46f2-90ad-e497c32bed07,Kimberly Campbell,kimberly.campbell549@icloud.com,(713) 326-8087,Active,Individual,true,false
+f563f4b7-51a9-4a3c-9b99-671c137fe647,Jacob Morris,jacob.morris250@aol.com,(214) 786-4045,Active,Individual,true,false
+674c865a-8fba-4da6-aad8-4a7284eb84fb,Kevin Nguyen,kevin.nguyen624@aol.com,(650) 966-6714,Active,Individual,false,false
+ae8a6271-31e1-43a0-91d8-34f9bbe141ee,Sanchez Trust,sanchez.trust@outlook.com,(305) 980-1827,In-Active,Foundation,false,false
+9d5feb6d-147f-4cbc-9aaf-7ed05ec5cea8,Stephen Sanchez,stephen.sanchez920@aol.com,(704) 998-7620,Active,Individual,true,true
+7d700999-b45a-4492-83d1-6ca24f209661,Matthew Perez,matthew.perez@yahoo.com,(214) 709-1920,Active,Individual,true,true
+1a5e03d7-7f83-4e89-a588-b87715e80dfa,Lee Educational Foundation,lee.educational.foundation@gmail.com,(404) 850-7298,Active,Foundation,true,false
+2499ea6c-2f73-4680-94cd-7cbb7aceb541,Stephen Stewart,stephen.stewart@yahoo.com,(202) 316-4805,Active,Individual,true,true
+da10e9c1-14c6-45e6-a575-75a542164701,Diaz Memorial Foundation,diaz.memorial.foundation@aol.com,(415) 763-4027,Active,Foundation,true,false
+877d51bd-e764-4eca-8b3f-c364548b0847,Adams Memorial Foundation,adams.memorial.foundation318@outlook.com,(313) 496-8690,Active,Foundation,true,true
+46c52612-8543-49ac-a6e1-f61ffeb4ddbe,Robinson Family Foundation,robinson.family.foundation997@outlook.com,(212) 222-1929,Active,Foundation,true,false
+c6d4b088-2168-498f-9474-c9b711152e20,Lopez Memorial Foundation,lopez.memorial.foundation969@hotmail.com,(206) 120-9948,Active,Foundation,false,false
+552ad023-2d36-41cf-831a-7ae34d75ece0,Deborah Morgan,deborah.morgan@outlook.com,(650) 529-6411,Active,Individual,true,true
+c76d1c08-bfbf-46a0-b0ab-f3d9d9e7c9f8,Lee Family Foundation,lee.family.foundation213@outlook.com,(510) 982-8185,Active,Foundation,true,true
+1f640be6-0d3a-4d16-98be-7313485a71cd,Perez Group LLC,perez.group.llc@yahoo.com,(617) 949-2448,In-Active,Corporate,false,false
+26af988a-97e3-4a69-aaa7-de09d54c72b7,Michael Stewart,michael.stewart@outlook.com,(313) 214-5970,Active,Individual,false,true
+aec6f2b1-6eb7-4fda-9b62-019215a7d4a3,Timothy Parker,timothy.parker289@hotmail.com,(617) 752-7556,Active,Individual,true,true
+97d4bbfa-7658-4daa-8a95-322ea7a96f17,Cooper Educational Foundation,cooper.educational.foundation@icloud.com,(510) 526-4348,Active,Foundation,true,false
+ef7551d6-858e-4b54-86f7-561e9ebe762a,White Financial Services,white.financial.services@yahoo.com,(916) 936-1360,In-Active,Corporate,false,true
+0b6b5369-c539-41ad-a444-50b1a7bca2fb,Justin Collins,justin.collins177@gmail.com,(310) 826-5891,Active,Individual,true,true
+2394f5d4-03fb-4e1e-b1f8-aa716a572ed4,Mitchell Associates,mitchell.associates@hotmail.com,(312) 934-3216,Active,Corporate,false,true
+fee8f1fd-7ce4-4f1d-b0cf-69da244a6aba,Sharon Walker,sharon.walker@yahoo.com,(404) 603-7100,Active,Individual,true,true
+a8412df4-9343-4931-b453-907984698fd0,Wright Holdings,wright.holdings@yahoo.com,(617) 128-2843,Active,Corporate,false,true
+463f8dd9-f781-49b4-884f-a0965fd448fb,Timothy Lewis,timothy.lewis@aol.com,(305) 415-4753,Active,Individual,true,false
+77371d59-0462-4ac1-9825-5d8b4e17fc26,Justin Hill,justin.hill752@hotmail.com,(949) 604-7379,Active,Individual,true,true
+203c0a9b-d04c-4660-a883-bfc1b294885d,Karen Parker,karen.parker297@icloud.com,(404) 794-6621,In-Active,Individual,true,true
+1d96ebd7-b34b-4275-815c-7a974dc9f241,Baker Educational Foundation,baker.educational.foundation@hotmail.com,(818) 173-3962,Active,Foundation,true,false
+3a34f369-9675-46a0-91be-e061176ecf6e,Morales Charitable Foundation,morales.charitable.foundation64@gmail.com,(818) 363-5791,Active,Foundation,false,false
+379f2edf-dd98-439d-9c88-96a9d043d9bf,Morgan Foundation,morgan.foundation@icloud.com,(713) 351-5075,Active,Foundation,true,false
+24896472-b6d6-4435-8d33-ab747a5e99f0,Gutierrez Trust,gutierrez.trust928@hotmail.com,(916) 233-1630,Active,Foundation,true,false
+002b6337-d929-488f-b41f-4ed357ed0da1,Baker Partners,baker.partners88@outlook.com,(949) 448-8756,In-Active,Corporate,true,true
+e6c81cb5-fc27-4e55-a7cd-5b8d752472b3,Robinson Community Foundation,robinson.community.foundation@yahoo.com,(713) 211-2297,Active,Foundation,false,false
+f235979c-ce6d-4732-b8e8-4c0b008f0991,Gutierrez Scholarship Foundation,gutierrez.scholarship.foundation761@aol.com,(818) 973-2571,Active,Foundation,true,false
+794a112d-ba80-498f-b3df-7018054fc015,Adams Community Foundation,adams.community.foundation@yahoo.com,(916) 687-7936,In-Active,Foundation,true,false
+cf2a5100-ec64-48b0-9987-32f9a528a1e8,Nguyen Services Inc,nguyen.services.inc416@yahoo.com,(818) 536-8770,Active,Corporate,false,false
+ca99310b-1a86-4d21-988c-884c7de39b4b,Smith Memorial Foundation,smith.memorial.foundation184@outlook.com,(310) 647-4325,Active,Foundation,true,false
+da1d818e-b3b7-4ece-a7ed-00fafbd42f55,Smith Associates,smith.associates763@gmail.com,(818) 292-1984,Active,Corporate,false,false
+a705ec8e-9a16-492a-8cba-b4dd242f0dd9,Charles Sanchez,charles.sanchez750@icloud.com,(704) 944-1931,Active,Individual,false,false
+874c002a-c9b5-472a-a7be-41b3af6d9520,Gary Nguyen,gary.nguyen@icloud.com,(713) 913-5725,In-Active,Individual,true,false
+4f40d3b9-9027-40a4-84c7-55c3fbc287a3,Gomez Foundation,gomez.foundation994@gmail.com,(214) 583-9940,Active,Foundation,true,true
+f023765b-6b11-4f77-8921-c2f8e14cab6e,Hernandez Trust,hernandez.trust@gmail.com,(212) 646-6059,In-Active,Foundation,true,false
+926d0314-0b70-433c-8500-f7f56280ff22,Nguyen Research Foundation,nguyen.research.foundation26@gmail.com,(212) 212-6381,Active,Foundation,false,false
+44a2e7f7-4e9d-4df9-b572-cc7b62498fd3,Ruth Murphy,ruth.murphy726@gmail.com,(617) 634-3799,In-Active,Individual,false,false
+0e677476-c139-4948-8ed3-58d1a3bb9003,Sharon Cook,sharon.cook@yahoo.com,(313) 437-4254,In-Active,Individual,true,true
+99f837bb-8a10-428b-93fa-6ddfd3d0990e,Hernandez Services Inc,hernandez.services.inc@gmail.com,(310) 870-5678,Active,Corporate,false,false
+657f2ef5-ebfb-4b00-91f1-f7dbbd94dd86,Collins Industries,collins.industries@aol.com,(305) 624-6553,Active,Corporate,false,false
+a571a0ab-0890-4e8c-99e6-33f1f315dce1,Allen Educational Foundation,allen.educational.foundation122@aol.com,(704) 720-9820,Active,Foundation,false,false
+f2431f8c-a268-4dfc-8e73-d0689ced13ef,Roberts Associates,roberts.associates@icloud.com,(617) 176-9133,In-Active,Corporate,true,false
+2231fc6c-4e97-4848-b670-3cd30d9ac48a,Paul Garcia,paul.garcia824@icloud.com,(703) 907-7941,Active,Individual,false,false
+70d605fb-e6c0-4cc3-b33a-147924ea138a,Timothy Jones,timothy.jones176@hotmail.com,(949) 341-8471,Active,Individual,false,true
+d5fd13e5-656d-4ecc-87d7-786ff9d5d4e5,Gutierrez Industries,gutierrez.industries60@hotmail.com,(818) 753-9297,In-Active,Corporate,false,false
+994fc8f8-455f-444b-aa05-6b4f37873176,Justin Ortiz,justin.ortiz260@outlook.com,(818) 513-5142,Active,Individual,false,false
+1dc483c7-d902-44b8-a360-ba102da320a8,Perez Community Foundation,perez.community.foundation662@yahoo.com,(310) 546-5535,Active,Foundation,true,false
+d9642e3f-a7fe-4d17-ab02-0cb4ee516f4e,Stewart Educational Foundation,stewart.educational.foundation770@icloud.com,(310) 537-6946,Active,Foundation,true,false
+8082f1c8-1deb-44f4-844d-2c0dd6b04ff6,Ryan Collins,ryan.collins@yahoo.com,(206) 589-2721,Active,Individual,false,false
+caf5fce7-b665-426a-92a3-4d7e169a63b6,Allen Partners,allen.partners256@gmail.com,(404) 377-7416,Active,Corporate,true,false
+ae5da56f-346f-4f2b-a3de-9ce030a52c71,Lopez Community Foundation,lopez.community.foundation115@icloud.com,(916) 599-9264,Active,Foundation,false,false
+9e381400-650b-486b-ad1a-43163bca2a1f,Anderson Industries,anderson.industries641@outlook.com,(305) 296-8821,In-Active,Corporate,true,true
+e6787d8c-e4b9-4759-b401-9e48f0a529ea,Anderson Research Foundation,anderson.research.foundation@icloud.com,(650) 166-8488,Active,Foundation,false,false
+6688941c-a525-4a8e-8976-5fa94b5c2a46,Lopez Educational Foundation,lopez.educational.foundation@icloud.com,(704) 613-7942,Active,Foundation,false,false
+2a28c276-e60c-4ee9-8534-a97fdcb3b758,Anderson Services Inc,anderson.services.inc880@gmail.com,(703) 818-9741,Active,Corporate,true,false
+7fb1f40e-e248-49b7-8f81-24ac0ab1ae97,Cruz Charitable Foundation,cruz.charitable.foundation551@yahoo.com,(323) 975-8617,Active,Foundation,true,false
+2b7fb609-5dba-4c2b-a4e4-08099f80eda9,Sandra Moore,sandra.moore@outlook.com,(704) 990-2709,Active,Individual,true,false
+8eb8dcb1-4239-4d21-a2e9-ef31c67413ca,Murphy Technologies Inc,murphy.technologies.inc540@hotmail.com,(310) 926-2979,Active,Corporate,false,false
+a991ba55-0239-4600-940c-f424e3fa56ad,Joshua Scott,joshua.scott@aol.com,(617) 376-3529,Active,Individual,false,false
+23255b14-1e5c-482d-9ce4-a7f4144aea98,Ortiz Global Inc,ortiz.global.inc@yahoo.com,(415) 685-2533,Active,Corporate,true,false
+c7f6b399-3a81-404e-9c0f-5ba24adb4852,White International,white.international@hotmail.com,(650) 117-2426,Active,Corporate,true,true
+1fcec0e8-811f-4c46-be53-ce7fbcc5fe9a,Thomas Community Foundation,thomas.community.foundation@outlook.com,(214) 536-6831,Active,Foundation,false,false
+06d43852-59e6-48c2-9618-0c0992f27cc3,Rogers Associates,rogers.associates483@icloud.com,(949) 560-4489,Active,Corporate,false,true
+7a526171-df34-4e76-b702-9804c2e8f326,Walker Corp,walker.corp@hotmail.com,(404) 251-6515,In-Active,Corporate,true,false
+0d5e05cf-60a8-4945-8baf-eab81b1a40d1,Susan Phillips,susan.phillips@outlook.com,(404) 541-6504,Active,Individual,false,false
+8065da54-b340-4d9c-b389-ae28e86d09f0,Taylor Holdings,taylor.holdings465@aol.com,(949) 703-3050,Active,Corporate,false,false
+0111323e-c99d-4595-ab3c-86b07b6b8b67,Reyes Health Foundation,reyes.health.foundation53@hotmail.com,(703) 129-2324,Active,Foundation,true,false
+f595b16c-20be-428e-8a30-6d0778a76a74,Hall International,hall.international340@yahoo.com,(214) 447-3282,Active,Corporate,false,false
+0265a327-7193-4b49-81e3-15e438fe6a59,Sanchez Services Inc,sanchez.services.inc498@yahoo.com,(214) 468-2429,Active,Corporate,true,false
+4c0b4e34-3b34-4926-83d7-d58d90c85f25,Lisa Miller,lisa.miller@icloud.com,(202) 379-9773,Active,Individual,true,false
+fc4d1143-9fac-4c1e-89b6-c66d9a456ad4,Martin Health Foundation,martin.health.foundation@hotmail.com,(323) 144-8929,Active,Foundation,false,false
+21ed8c7d-3903-4f14-93a8-4d31dfa3df3e,Walker Family Foundation,walker.family.foundation604@icloud.com,(510) 427-4940,Active,Foundation,false,false
+2432ba94-ab15-44bb-b8dc-b86bbc6ae85b,Taylor Health Foundation,taylor.health.foundation@aol.com,(510) 343-9867,Active,Foundation,false,false
+4ad43caa-3ed5-4269-983b-ef96b92424cc,Paul Cooper,paul.cooper@hotmail.com,(704) 555-1755,Active,Individual,false,false
+08ab2daf-d8b3-4b53-aab6-d0fd255df47e,Evans Services Inc,evans.services.inc@icloud.com,(323) 828-6138,Active,Corporate,true,false
+f81b6f79-9185-485e-9a32-44e385287b2b,Gomez Educational Foundation,gomez.educational.foundation693@gmail.com,(312) 294-2572,Active,Foundation,true,false
+75d887f1-5145-422d-9bb2-0afd4a4554c4,Wright Corp,wright.corp@hotmail.com,(313) 120-3259,Active,Corporate,true,false
+d3dcb54d-6ce1-49d4-bc9f-b46655137b76,Baker Community Foundation,baker.community.foundation642@hotmail.com,(312) 908-5252,Active,Foundation,false,false
+0829e113-7aec-4f00-a97e-bceb0c36f569,Torres Group LLC,torres.group.llc800@icloud.com,(949) 921-6383,Active,Corporate,true,false
+03ef3c4e-03ce-414c-beaa-54b5fd61d686,Davis Scholarship Foundation,davis.scholarship.foundation315@hotmail.com,(312) 739-8160,Active,Foundation,false,false
+ff13755a-ac06-4556-b8c8-e84819106d1f,Stewart Scholarship Foundation,stewart.scholarship.foundation@gmail.com,(206) 550-8147,Active,Foundation,true,false
+c2c23588-d60b-422c-bed2-ab6430f617c9,Morgan Systems Inc,morgan.systems.inc406@outlook.com,(713) 968-4611,Active,Corporate,false,false
+a2bb774b-7949-49f2-a8da-09c165600531,Hall Memorial Foundation,hall.memorial.foundation@icloud.com,(617) 481-2174,Active,Foundation,false,false
+ec5996a9-4eb8-4f3f-b7dd-e76d468e8c7b,Jessica Murphy,jessica.murphy477@aol.com,(650) 248-8105,Active,Individual,false,false
+52cadc65-5bf3-404c-9d40-ea749c2419fa,Sandra Brown,sandra.brown597@icloud.com,(916) 612-3801,Active,Individual,false,false
+2b2e9013-ff16-4a4f-acaf-f54ffffd2a7b,Nancy Johnson,nancy.johnson@outlook.com,(202) 892-6589,Active,Individual,true,false
+e10a95f1-80ed-4391-86f3-b187ba110167,Clark Trust,clark.trust97@aol.com,(916) 686-2871,Active,Foundation,false,false
+2f84aeef-698e-476d-bb30-9fae74a3d121,Johnson Holdings,johnson.holdings795@outlook.com,(650) 610-1490,In-Active,Corporate,true,false
+c98676ba-404c-478d-bdd6-120135764c73,Gutierrez Health Foundation,gutierrez.health.foundation@icloud.com,(713) 248-2439,Active,Foundation,true,true
+4f01d83e-7e79-406d-b59b-84de4779e789,Jackson Services Inc,jackson.services.inc@outlook.com,(916) 462-2647,Active,Corporate,false,true
+71310869-962a-45a5-ba4e-7fab16786ae1,Williams Associates,williams.associates949@hotmail.com,(713) 866-8793,Active,Corporate,true,false
+d20bd426-91ef-467b-9301-0da9115e451f,Hernandez Community Foundation,hernandez.community.foundation191@yahoo.com,(305) 561-4296,Active,Foundation,false,false
+344261d0-fc8f-4fa2-8860-d7fb4281f7c4,Green International,green.international@gmail.com,(510) 461-1959,Active,Corporate,true,false
+780a3d37-81d6-4b79-ad56-acd039613df4,Morales Family Foundation,morales.family.foundation410@outlook.com,(949) 100-8434,Active,Foundation,true,true
+58b25489-40a9-42bd-be8d-367bcdf5571b,Deborah Lewis,deborah.lewis@gmail.com,(415) 719-2795,Active,Individual,true,true
+288db2c8-541f-491f-affe-f6fcb9eb9d71,Garcia Community Foundation,garcia.community.foundation471@hotmail.com,(617) 171-1077,In-Active,Foundation,true,false
+6c9c6560-388a-4f30-a845-c3be58d09b2b,Jackson Scholarship Foundation,jackson.scholarship.foundation@yahoo.com,(617) 240-4163,Active,Foundation,true,false
+21ce22b4-ab41-4ff6-b86f-1501b7d36f05,Martin Charitable Foundation,martin.charitable.foundation@icloud.com,(305) 158-8886,Active,Foundation,true,false
+388d46c2-7388-4b57-b7c9-92ffefc914cc,Joseph Diaz,joseph.diaz@hotmail.com,(214) 573-7964,Active,Individual,false,true
+9148610c-bc5d-4e7e-ae32-368268b7a73c,Jeffrey Lewis,jeffrey.lewis831@aol.com,(713) 723-9182,Active,Individual,false,true
+57fb16f3-1828-4c8b-9590-7191ed97d9df,Reyes Financial Services,reyes.financial.services@hotmail.com,(818) 829-4920,Active,Corporate,false,false
+aba4aef5-45f1-46de-a32e-032e2dbb1caa,Sanchez Systems Inc,sanchez.systems.inc619@hotmail.com,(713) 571-4026,Active,Corporate,false,false
+32efb366-0efc-4cbf-aa5e-9cb41b9dd4e3,Thompson Community Foundation,thompson.community.foundation@aol.com,(415) 162-4483,Active,Foundation,false,true
+81b3850b-8b7a-462e-a942-634ebc4ee558,Ortiz Trust,ortiz.trust@yahoo.com,(703) 828-8618,Active,Foundation,false,true
+2204c741-7c73-4f10-9469-7ec9854e0459,Rivera Services Inc,rivera.services.inc@icloud.com,(202) 989-1419,Active,Corporate,false,false
+70a1fb44-cdd1-4d47-800f-d226f8965d3d,Karen Nelson,karen.nelson936@aol.com,(703) 635-1968,Active,Individual,true,false
+98154e7f-1262-42e1-98b6-aa56a6c51d02,Roberts Industries,roberts.industries574@gmail.com,(310) 195-8127,In-Active,Corporate,true,true
+877e893f-42fd-46ae-9634-d66c6ceac5c5,Sarah Cruz,sarah.cruz579@aol.com,(510) 285-3471,Active,Individual,true,true
+b14b638b-5ea3-4399-9b6a-a656d883e6d9,Cooper Industries,cooper.industries@icloud.com,(415) 871-6165,Active,Corporate,false,false
+b771e64e-9a85-410f-b197-13e20c6e3703,Hall Charitable Foundation,hall.charitable.foundation@outlook.com,(650) 544-2466,In-Active,Foundation,false,false
+2d8d991c-20aa-4035-a1c3-96d2c3f13cbf,Adams Trust,adams.trust@gmail.com,(404) 760-7775,Active,Foundation,false,false
+714956f8-ee58-4166-96a2-0f9fdb3f896a,James Jackson,james.jackson@hotmail.com,(704) 194-3923,Active,Individual,true,true
+29f1a5d3-1042-4836-9609-c85ed584f7ae,William Moore,william.moore@aol.com,(949) 624-6299,Active,Individual,false,false
+90837196-d7a0-4f0f-9998-fb989bdf949e,Susan Moore,susan.moore@gmail.com,(206) 799-2129,Active,Individual,false,false
+0dff6a32-8ee7-4210-9b97-b33842d00f1e,Karen Smith,karen.smith579@icloud.com,(916) 122-8397,Active,Individual,true,false
+9285e359-130f-477f-8e6f-1c8fbce8379e,Gomez Solutions LLC,gomez.solutions.llc@hotmail.com,(415) 373-5020,Active,Corporate,false,false
+34c61568-754a-4892-8bf5-be5b7b7826c3,Thomas Partners,thomas.partners940@outlook.com,(713) 212-4465,Active,Corporate,false,true
+18801ed7-93e9-4dca-8970-3a1828629140,Wright Industries,wright.industries144@hotmail.com,(206) 684-2672,In-Active,Corporate,false,false
+bdf3a92b-bf9b-4097-8c47-cf84cd1551d3,Nguyen Solutions LLC,nguyen.solutions.llc@outlook.com,(818) 952-6254,Active,Corporate,true,true
+d83a9dcb-a1c6-4dba-8cfb-5788495cb4ab,Green Community Foundation,green.community.foundation107@aol.com,(704) 235-7248,Active,Foundation,true,true
+6a2d05fa-e106-4ede-95e8-f1865182b47c,Donald Green,donald.green630@icloud.com,(214) 523-5010,Active,Individual,false,true
+d48248aa-05a9-42e9-b396-74435e0cf64d,Martinez Services Inc,martinez.services.inc@outlook.com,(202) 439-9457,Active,Corporate,false,false
+ea5ac616-2abf-475f-9ac6-8664c6a96bae,Wright Scholarship Foundation,wright.scholarship.foundation@aol.com,(212) 847-6934,Active,Foundation,true,false
+0fb23f06-75fb-42b4-9ec9-9f3a52865ede,Evans Memorial Foundation,evans.memorial.foundation938@yahoo.com,(916) 612-8249,Active,Foundation,true,true
+39e1024a-06aa-43fa-aaba-706bc8e91a6f,Wilson Systems Inc,wilson.systems.inc@aol.com,(713) 226-1443,Active,Corporate,false,false
+5b10452a-f080-427b-b947-f1abca75c9f0,Jason Martinez,jason.martinez779@outlook.com,(510) 619-6522,Active,Individual,false,true
+51a38d63-3aa1-49ad-b465-2430ce2449ef,Nancy Perez,nancy.perez944@aol.com,(313) 960-3011,Active,Individual,true,true
+7e84315c-4694-4ce9-869d-a906d5673727,Joshua Allen,joshua.allen@outlook.com,(206) 346-9952,In-Active,Individual,false,false
+83c6327f-4ad3-4369-8148-c5296a729c20,Adams Health Foundation,adams.health.foundation@gmail.com,(818) 887-5343,Active,Foundation,true,true
+f63419aa-d704-47c6-98b1-f13322d8f234,Nguyen Financial Services,nguyen.financial.services@hotmail.com,(212) 615-2980,Active,Corporate,true,false
+d8bdbab3-fd12-431b-a1ac-d2963fb0038e,Diaz Community Foundation,diaz.community.foundation813@outlook.com,(312) 502-1655,Active,Foundation,false,true
+966ffe43-c27a-449f-af43-14ed11a4c6f3,Williams Health Foundation,williams.health.foundation743@gmail.com,(206) 183-4719,In-Active,Foundation,true,true
+a33f5036-d85a-4761-b850-e147de7de56a,Davis Family Foundation,davis.family.foundation638@yahoo.com,(305) 535-3357,Active,Foundation,true,false
+3fafa132-104c-442b-8279-a7bccaba242b,Sarah Smith,sarah.smith475@icloud.com,(703) 319-7430,Active,Individual,true,true
+2c3562be-68a4-4981-b060-a46471790cf7,Roberts Global Inc,roberts.global.inc619@gmail.com,(949) 828-8288,Active,Corporate,true,true
+211429f2-4b94-445a-87b5-0c9da43213f8,Garcia Corp,garcia.corp939@yahoo.com,(415) 508-8094,Active,Corporate,true,false
+431cc668-595d-4814-babf-9112e9b6e152,Campbell Trust,campbell.trust@outlook.com,(313) 955-1026,Active,Foundation,false,false
+69ea6767-f647-4b08-b530-c519eadc9e5b,Morales Manufacturing,morales.manufacturing139@outlook.com,(415) 147-5385,Active,Corporate,true,true
+07bfca6a-fe9d-4456-97fd-e022db167e1b,Miller Financial Services,miller.financial.services@hotmail.com,(949) 926-5365,Active,Corporate,true,true
+e2309ea0-0ed9-42c3-b14b-fe0818c4a04b,Donald Mitchell,donald.mitchell@hotmail.com,(818) 394-2148,In-Active,Individual,false,false
+1b5d297b-6280-48ae-a376-93dbd198e4a6,Christopher Stewart,christopher.stewart599@yahoo.com,(212) 529-9407,In-Active,Individual,false,false
+79dbf310-692e-4da3-b77a-cb0bd9ff18e6,Nguyen Consulting,nguyen.consulting759@gmail.com,(713) 936-9802,In-Active,Corporate,false,false
+88a00572-0e73-4f2e-8066-23eda051d4d9,Adams Systems Inc,adams.systems.inc@hotmail.com,(510) 222-9752,Active,Corporate,true,false
+6321c4e0-fcf6-4301-9b52-2b82e8cdc9e5,Cooper Research Foundation,cooper.research.foundation342@yahoo.com,(202) 804-1653,Active,Foundation,true,true
+30fc3e66-f58b-47c0-be72-ce3bb08f63c4,Robinson Services Inc,robinson.services.inc403@hotmail.com,(202) 658-4283,Active,Corporate,true,false
+16e06d53-7b12-4b5d-8275-bd6520c270ae,Michael White,michael.white@gmail.com,(617) 165-8106,In-Active,Individual,true,false
+f632e85c-31ed-49e4-8bd5-b7ff6ba4487b,Rivera Trust,rivera.trust329@aol.com,(312) 405-5235,Active,Foundation,true,false
+03742255-da0d-4a11-a888-6377c6f2bd97,Lopez Trust,lopez.trust244@gmail.com,(214) 374-6259,Active,Foundation,false,false
+133a6ff3-1b78-4e14-b08b-2b5bac80325a,Nancy Cook,nancy.cook193@outlook.com,(713) 303-1200,Active,Individual,false,false
+ae031cc8-e9f9-45ea-8eb4-307ae5ec2d35,Susan Wright,susan.wright@aol.com,(212) 134-6785,Active,Individual,true,true
+ffff9d69-41e7-4f19-8685-afa4f6ca7ae9,Morris Trust,morris.trust815@gmail.com,(310) 454-1382,Active,Foundation,false,false
+f2a91614-e719-400f-8287-179c37001c32,Richard Walker,richard.walker@aol.com,(212) 555-5704,Active,Individual,true,true
+a5f55197-6830-484d-8f1e-7404e99399d4,George Baker,george.baker@icloud.com,(415) 651-2863,Active,Individual,true,false
+e7fa0fdc-738d-4c41-a9a4-4fa0fd7fc385,Murphy Enterprises,murphy.enterprises@icloud.com,(206) 492-3606,Active,Corporate,false,true
+4df33a6d-66a2-4b58-8f3b-7ace4c39defe,Parker Associates,parker.associates@icloud.com,(703) 852-4125,Active,Corporate,false,false
+103cfff3-6bbf-48fb-bccf-0afad33ae580,Christopher Hall,christopher.hall@yahoo.com,(703) 540-4579,Active,Individual,false,true
+f74db8ca-f275-47d6-ac0a-1ed04532673b,Flores Charitable Foundation,flores.charitable.foundation@gmail.com,(617) 370-5134,Active,Foundation,false,true
+b9a92411-cce8-48ec-93ff-a1c4b30a7964,Mitchell Industries,mitchell.industries352@aol.com,(650) 507-7039,Active,Corporate,true,false
+709d9d88-b1a1-42ec-adf9-49e7c101abad,Flores International,flores.international729@yahoo.com,(312) 984-1182,Active,Corporate,true,false
+72fa3380-f643-4b4a-9844-24f6b72445db,Daniel Martin,daniel.martin@hotmail.com,(310) 853-5202,Active,Individual,true,false
+6903bd23-60d0-4465-b296-91aeb40499bb,Adams Manufacturing,adams.manufacturing@yahoo.com,(214) 835-3854,Active,Corporate,true,false
+1b876238-4a5f-4e24-88d1-93c4ded61ffc,Nelson Memorial Foundation,nelson.memorial.foundation@gmail.com,(212) 498-5387,Active,Foundation,true,false
+320ab4aa-ccb0-48fe-be17-d37007bf3a61,Rogers Memorial Foundation,rogers.memorial.foundation861@gmail.com,(206) 487-7585,In-Active,Foundation,true,true
+b6d5e021-a668-47d0-b247-2b96cd50f4fb,Gary White,gary.white483@yahoo.com,(323) 624-5389,In-Active,Individual,true,false
+9c269994-bcf4-4fb0-a5af-a8d6e40f9211,Thomas Manufacturing,thomas.manufacturing@icloud.com,(703) 822-2220,Active,Corporate,true,false
+06dca28d-cb9c-45af-b6f1-9cc5e569e6e1,Carter Enterprises,carter.enterprises@gmail.com,(818) 941-8440,Active,Corporate,false,false
+4f7e8800-4500-4e92-8494-99bcb634fe4f,Paul Miller,paul.miller@gmail.com,(310) 132-8992,Active,Individual,true,false
+9675d08b-35b6-4168-bff5-00e20564ac3d,Diaz Charitable Foundation,diaz.charitable.foundation@hotmail.com,(818) 666-8827,Active,Foundation,false,false
+40588ea5-3ed8-42da-b85e-806255e06e31,Rogers Enterprises,rogers.enterprises@gmail.com,(404) 903-8414,Active,Corporate,true,false
+149933cc-0be8-47d8-951b-2bdf74ca2c55,Flores Scholarship Foundation,flores.scholarship.foundation416@icloud.com,(415) 877-7853,Active,Foundation,false,false
+0774b0c8-3af9-4a35-9dc2-13310a77193b,Eric Walker,eric.walker@outlook.com,(206) 930-5051,Active,Individual,false,false
+01d3667b-26c2-4249-b24a-34a7d00c4026,Miller Group LLC,miller.group.llc@hotmail.com,(323) 645-9458,Active,Corporate,false,true
+5b26cf5c-08ae-4702-86ea-bd2a9d30c18b,Walker Partners,walker.partners80@aol.com,(949) 693-2242,Active,Corporate,false,true
+ff8de4ac-3619-4613-a80f-f30e5a53c963,Anderson Associates,anderson.associates@yahoo.com,(704) 641-1111,Active,Corporate,true,false
+02567e1e-be50-4bd2-aafb-e618c53eb3a3,Sarah Harris,sarah.harris810@icloud.com,(206) 762-1880,In-Active,Individual,false,false
+3102a91a-0f32-49ab-ba9c-e01bd783d9d3,Cruz Consulting,cruz.consulting457@gmail.com,(310) 246-6068,Active,Corporate,false,true
+ce34e58a-a4fe-4730-9dd0-5ddad9ff4d37,Murphy Scholarship Foundation,murphy.scholarship.foundation@icloud.com,(703) 286-9271,Active,Foundation,true,false
+e621845c-09f6-4953-b9d8-b764ec382db3,William Harris,william.harris@aol.com,(703) 416-8514,Active,Individual,false,false
+90e4ae07-9010-4113-8ade-9a30fd866e30,Thompson Family Foundation,thompson.family.foundation@gmail.com,(212) 846-6560,Active,Foundation,false,false
+2d8b51a1-be86-4877-a3c0-ccb386ac7754,Morris Associates,morris.associates@outlook.com,(713) 531-6887,Active,Corporate,true,false
+5ebd3b10-df3b-469c-bb10-58cadb0bb30f,Helen Moore,helen.moore@icloud.com,(617) 749-7167,Active,Individual,true,false
+ec7797c5-edfb-4957-9f54-0fa4c1f5c22a,Deborah Edwards,deborah.edwards225@icloud.com,(703) 246-6196,Active,Individual,false,true
+f1aed2a6-1ed4-4f1c-80b1-7ca6f983b96e,Kimberly Morris,kimberly.morris264@icloud.com,(617) 114-8641,Active,Individual,true,false
+0440c665-6106-45b0-aeb4-1d823b41f21f,Carol Gomez,carol.gomez103@outlook.com,(617) 577-8373,Active,Individual,true,false
+452a6191-9dae-49bf-80a7-eb2b032df6c5,Roberts Memorial Foundation,roberts.memorial.foundation508@outlook.com,(323) 248-7942,Active,Foundation,true,true
+c2c33dc4-6c49-4451-9f37-1caee212031d,Lopez Technologies Inc,lopez.technologies.inc796@gmail.com,(818) 225-6419,Active,Corporate,true,true
+189c7c58-4b89-49c7-9d60-fdf3fc3210d0,Gonzalez Enterprises,gonzalez.enterprises@gmail.com,(818) 799-8503,Active,Corporate,false,false
+385366a3-9363-4e76-8df9-e1207e615a16,Cruz Partners,cruz.partners@yahoo.com,(305) 638-7958,Active,Corporate,true,false
+73c4d241-ee44-4e64-af97-6e1087c03c77,Stephen Edwards,stephen.edwards@outlook.com,(818) 926-1697,Active,Individual,false,false
+3cda5b14-f998-447e-893f-22037fd2fa91,Betty Nelson,betty.nelson@gmail.com,(206) 345-2707,In-Active,Individual,true,false
+5409b5ad-c3e1-4d43-bad9-f8dd7194bb20,Robinson Health Foundation,robinson.health.foundation@gmail.com,(313) 473-9820,Active,Foundation,false,false
+53ec1ec4-64d7-4f9d-832b-deb1fc75c26b,Evans Solutions LLC,evans.solutions.llc88@hotmail.com,(415) 492-6830,Active,Corporate,true,true
+13811fda-2b02-44e1-ac08-635baa4c5641,Walker Health Foundation,walker.health.foundation@aol.com,(313) 896-5140,Active,Foundation,true,false
+45acc693-33b5-4880-b410-c2c356e2233e,Evans Research Foundation,evans.research.foundation@aol.com,(703) 425-9996,Active,Foundation,true,false
+f6c11317-e641-41c7-96a3-92e91f09caa1,Williams International,williams.international782@icloud.com,(305) 395-5306,In-Active,Corporate,true,false
+ada4d1cb-cb54-4c6b-b2fb-de57606a075b,Donald Reyes,donald.reyes888@yahoo.com,(310) 519-4036,In-Active,Individual,true,true
+8ebf90a2-070d-4ca7-b86b-1f7699da132b,Lisa Collins,lisa.collins692@icloud.com,(650) 834-8274,Active,Individual,true,false
+17e114bd-cff5-46f8-a8da-b0fbdcafa61f,Lewis Charitable Foundation,lewis.charitable.foundation777@hotmail.com,(202) 134-9728,Active,Foundation,true,true
+9aa26d1b-060a-4b1b-a83d-01baaa3956e7,Daniel Gutierrez,daniel.gutierrez462@gmail.com,(313) 814-9948,Active,Individual,true,false
+7a581c4d-80c1-4079-ae81-44107c01fd0c,Stewart Family Foundation,stewart.family.foundation19@outlook.com,(510) 976-3233,Active,Foundation,true,false
+b72d6557-6e0c-49e6-84ff-4523513e09e7,Davis Health Foundation,davis.health.foundation@hotmail.com,(703) 751-4833,In-Active,Foundation,true,false
+4380e8a1-6758-488c-a3b4-54a998bf5c16,Morris Financial Services,morris.financial.services100@gmail.com,(415) 908-4659,In-Active,Corporate,true,false
+20e27922-37ba-4c00-89aa-a82789a8d70a,Miller Foundation,miller.foundation367@gmail.com,(713) 977-1540,Active,Foundation,false,false
+a7af4405-0ea6-4719-bdc0-34c1f59d239d,Cruz Scholarship Foundation,cruz.scholarship.foundation906@outlook.com,(313) 199-7938,Active,Foundation,true,true
+acd97db0-b5cd-4efe-a0ad-c0473af4cbea,Barbara Phillips,barbara.phillips447@outlook.com,(617) 285-2676,In-Active,Individual,true,false
+63b8e6b1-24bb-47db-8ce7-49917abf7b26,Baker Solutions LLC,baker.solutions.llc21@gmail.com,(510) 313-8701,Active,Corporate,true,false
+8637cb90-7ed3-4d0b-ba94-e3b5c7cc310d,Richard Carter,richard.carter@aol.com,(202) 391-8899,Active,Individual,true,false
+3f7f06f6-e8aa-4f77-a15b-b241bdb33076,George Roberts,george.roberts@hotmail.com,(510) 747-8770,Active,Individual,true,false
+b5f2fa68-1dee-474b-ab2a-58e3014ff973,Brown Partners,brown.partners@hotmail.com,(415) 176-7564,Active,Corporate,false,false
+7242997a-7d16-4b63-a173-ee0292d03452,Hill Educational Foundation,hill.educational.foundation@icloud.com,(312) 357-8019,Active,Foundation,true,false
+73beacc0-caef-42d0-bb4f-24501ace9f68,Stephen Hall,stephen.hall@icloud.com,(313) 811-7999,Active,Individual,false,true
+5cdb9724-0894-4155-8cf2-6fbf8af12396,Susan White,susan.white@hotmail.com,(415) 287-8768,Active,Individual,true,true
+3d0cae60-7c05-4cf0-92b2-08702caeaed8,Stewart Research Foundation,stewart.research.foundation986@gmail.com,(212) 781-5335,Active,Foundation,true,false
