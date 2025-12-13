@@ -1,137 +1,170 @@
 using donation_MgmtSrv as service from '../../srv/service';
 using from '../annotations';
 
-// Add side effects to refresh donor fields when donor is selected
+// --- Side effects: when donor changes, refresh donor association ---
 annotate service.Donations with @(
     Common.SideEffects #DonorChanged : {
-        SourceProperties : [donor_ID],
-        TargetEntities : [donor]
+        SourceProperties : [ donor_ID ],
+        TargetEntities   : [ donor ]
     },
     UI.SelectionFields : [
         donor_ID,
         campaign,
-        cause,
-    ],
+        cause
+    ]
 );
 
-// Configure the donor association field with value help
+// --- Donor association: value help & display text ---
 annotate service.Donations with {
     donor @(
-        Common.Label : 'Donor',
-        Common.Text : donor.name,
-        Common.TextArrangement : #TextFirst,
-        Common.ValueList : {
-            $Type : 'Common.ValueListType',
-            CollectionPath : 'Donors',
-            Parameters : [
+        Common.Label          : 'Donor',
+        Common.Text           : donor.name,
+        Common.TextArrangement: #TextFirst,
+        Common.ValueList      : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Donors',
+            Parameters    : [
                 {
-                    $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : donor_ID,
-                    ValueListProperty : 'ID',
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: donor_ID,
+                    ValueListProperty: 'ID'
                 },
                 {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'name',
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'name'
                 },
                 {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'email',
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'email'
                 },
                 {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'phone',
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'phone'
                 }
-            ],
+            ]
         }
     )
 };
 
-// Make the stored fields readonly so users can't edit them directly
+// --- Make stored donor snapshot + summary read-only ---
 annotate service.Donations with {
-    donorName @readonly;
+    donorName  @readonly;
     donorEmail @readonly;
     donorPhone @readonly;
+    summary    @readonly;
 };
 
-// Main form layout - display donor info from association
+// --- Main form layout (General Information) ---
 annotate service.Donations with @(
     UI.FieldGroup #Main : {
         $Type : 'UI.FieldGroupType',
-        Data : [
+        Data  : [
             {
                 $Type : 'UI.DataField',
                 Value : donor_ID,
-                Label : 'Donor',
+                Label : 'Donor'
             },
             {
                 $Type : 'UI.DataField',
                 Value : donor.email,
-                Label : 'Donor Email',
+                Label : 'Donor Email'
             },
             {
                 $Type : 'UI.DataField',
                 Value : donor.phone,
-                Label : 'Donor Phone',
+                Label : 'Donor Phone'
             },
             {
                 $Type : 'UI.DataField',
-                Value : city,
+                Value : city
             },
             {
                 $Type : 'UI.DataField',
-                Value : amount,
+                Value : amount
             },
             {
                 $Type : 'UI.DataField',
-                Value : currencyCode,
+                Value : currencyCode
             },
             {
                 $Type : 'UI.DataField',
-                Value : donationDate,
+                Value : donationDate
             },
             {
                 $Type : 'UI.DataField',
-                Value : cause,
+                Value : cause
             },
             {
                 $Type : 'UI.DataField',
-                Value : campaign,
-            },
-        ],
+                Value : campaign
+            }
+        ]
     }
 );
 
-// Optional: List page columns
+// --- AI Summary section ---
+annotate service.Donations with @(
+    UI.FieldGroup #AISummary : {
+        $Type : 'UI.FieldGroupType',
+        Data  : [
+            {
+                $Type : 'UI.DataField',
+                Value : summary,
+                Label : 'AI Summary'
+            }
+        ]
+    }
+);
+
+// --- Facets: show General Information + AI Summary as separate sections ---
+annotate service.Donations with @(
+    UI.Facets : [
+        {
+            $Type  : 'UI.ReferenceFacet',
+            ID     : 'GeneralInformation',
+            Label  : 'General Information',
+            Target : '@UI.FieldGroup#Main'
+        },
+        {
+            $Type  : 'UI.ReferenceFacet',
+            ID     : 'AISummaryFacet',
+            Label  : 'AI Summary',
+            Target : '@UI.FieldGroup#AISummary'
+        }
+    ]
+);
+
+// --- List report columns ---
 annotate service.Donations with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
             Value : donor.name,
-            Label : 'Donor Name',
+            Label : 'Donor Name'
         },
         {
             $Type : 'UI.DataField',
-            Value : amount,
+            Value : amount
         },
         {
             $Type : 'UI.DataField',
-            Value : currencyCode,
+            Value : currencyCode
         },
         {
             $Type : 'UI.DataField',
-            Value : donationDate,
+            Value : donationDate
         },
         {
             $Type : 'UI.DataField',
-            Value : cause,
+            Value : cause
         },
         {
             $Type : 'UI.DataField',
-            Value : campaign,
+            Value : campaign
         },
         {
             $Type : 'UI.DataField',
-            Value : city,
-        },
+            Value : city
+        }
     ]
 );

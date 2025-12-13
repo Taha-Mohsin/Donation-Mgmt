@@ -24,5 +24,8 @@ entity Donations : cuid {
   cause: String(100);
   campaign: String(100);
   donor: Association to Donors;
+
+  summary      : String(2000);
+
 }
 
