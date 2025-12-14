@@ -32,115 +32,100 @@ module.exports = cds.service.impl(async function () {
     }
   });
 
-  // Generate / regenerate AI summary on CREATE and UPDATE
-this.before(['CREATE', 'UPDATE'], 'Donations', async (req) => {
-  // If this is a technical update with no data, skip
-  if (!req.data) return;
-
-  const { ID } = req.data;
-
-  // Load existing donation for UPDATE to merge unchanged fields
-  let existing = {};
-  if (ID) {
-    existing = await SELECT.one.from(Donations).where({ ID }) || {};
-  }
-
-  // Combine old + new values
-  const donationForAI = { ...existing, ...req.data };
-
-  // Need a donor to personalize the message
-  const donorIdForAI = donationForAI.donor_ID || donationForAI.donor_id;
-  if (!donorIdForAI) return;
-
-  const donor = await SELECT.one.from(Donors).where({ ID: donorIdForAI });
-  if (!donor) return;
-
-  try {
-    const message = await generateThankYouMessage(donationForAI, donor);
-
-    // Write directly into the data being saved.
-    // This works for both CREATE and UPDATE and does NOT cause recursion.
-    req.data.summary = message;
-  } catch (err) {
-    console.error('Error generating AI summary in before CREATE/UPDATE:', err);
-    // Do not block save if AI fails
-  }
-});
-
-
   /**
-   * After CREATE: generate AI-powered thank you message
+   * Helper function to generate AI message
+   * Used by both active and draft handlers
    */
-//   this.after('CREATE', 'Donations', async (data, req) => {
-//     try {
-//       const created = Array.isArray(data) ? data[0] : data;
-//       if (!created || !created.ID) return;
+  async function handleGenerateThankYouMessage(req, entityName) {
+    console.log('🔵 generateThankYouMessage action called');
+    console.log('Entity:', entityName);
+    console.log('Request params:', req.params);
+    
+    // Get the ID - works for both draft and active
+    const donationId = req.params[0]?.ID || req.params[0];
+    console.log('Donation ID:', donationId);
 
-//       console.log('Donation created:', created.ID);
+    if (!donationId) {
+      console.error('❌ No donation ID provided');
+      req.error(400, 'Donation ID is required');
+    }
 
-//       // Field names MUST match CDS: amount, currencyCode, donationDate, campaign, cause, city
-//       const fullDonation = await SELECT.one
-//         .from(Donations)
-//         .where({ ID: created.ID })
-//         .columns((d) => {
-//           d.ID,
-//           d.amount,
-//           d.currencyCode,   // ✅ matches schema
-//           d.donationDate,   // ✅ matches schema
-//           d.campaign,
-//           d.cause,
-//           d.city,
-//           d.donor((donor) => {
-//             donor.ID, donor.name, donor.email, donor.phone, donor.isRecurringDonor;
-//           });
-//         });
+    try {
+      // Query the appropriate entity (draft or active)
+      // For drafts, use the string name directly; for active, use the entity object
+      let donation;
+      if (entityName === 'Donations.drafts') {
+        // Use CDS.ql for draft queries with string name
+        donation = await SELECT.one
+          .from('donation_MgmtSrv.Donations.drafts')
+          .where({ ID: donationId });
+      } else {
+        // Use entity object for active entity
+        donation = await SELECT.one
+          .from(Donations)
+          .where({ ID: donationId });
+      }
+      
+      if (!donation) {
+        console.error('❌ Donation not found:', donationId);
+        req.error(404, 'Donation not found');
+      }
+      console.log('✅ Donation found:', donation);
 
-//       console.log('Full donation data fetched:', fullDonation);
+      if (!donation.donor_ID) {
+        console.error('❌ No donor linked to this donation');
+        req.error(400, 'This donation must have a donor before generating a thank you message');
+      }
 
-//       if (!fullDonation || !fullDonation.donor) {
-//         console.log('No donor linked to donation – skipping AI message');
-//         return;
-//       }
+      const donor = await SELECT.one
+        .from(Donors)
+        .where({ ID: donation.donor_ID });
+      
+      if (!donor) {
+        console.error('❌ Donor not found:', donation.donor_ID);
+        req.error(404, 'Donor not found for this donation');
+      }
+      console.log('✅ Donor found:', donor);
 
-//       const thankYouMessage = await generateThankYouMessage(fullDonation, fullDonation.donor);
+      console.log('🤖 Generating AI message...');
+      const message = await generateThankYouMessage(donation, donor);
+      console.log('✅ Message generated successfully');
+      console.log('Message preview:', message.substring(0, 100) + '...');
+      
+      // Update the appropriate entity (draft or active)
+      if (entityName === 'Donations.drafts') {
+        await UPDATE('donation_MgmtSrv.Donations.drafts')
+          .set({ summary: message })
+          .where({ ID: donationId });
+      } else {
+        await UPDATE(Donations)
+          .set({ summary: message })
+          .where({ ID: donationId });
+      }
+      
+      console.log('✅ Summary saved to database');
 
-//       console.log('=== AI-Generated Thank You Message ===');
-//       console.log(thankYouMessage);
-//       console.log('======================================');
-
-//       // Optional: store in DB if you add a column
-//       // await UPDATE(Donations).set({ thankYouMessage }).where({ ID: created.ID });
-
-//       await UPDATE(Donations)
-//       .set({ summary: thankYouMessage })
-//       .where({ ID: created.ID });
-
-
-//     } catch (error) {
-//       console.error('Error generating thank you message:', error);
-//       // Do NOT fail the transaction if AI fails
-//     }
-//   });
+      return { message };
+      
+    } catch (err) {
+      console.error('❌ Error in generateThankYouMessage:', err);
+      console.error('Stack:', err.stack);
+      req.error(500, 'Failed to generate AI summary: ' + err.message);
+    }
+  }
 
   /**
-   * CAP action to regenerate message on demand:
-   * action generateThankYouMessage(ID: UUID) returns { message: String; }
+   * Register handler for ACTIVE entity
    */
   this.on('generateThankYouMessage', 'Donations', async (req) => {
-    const donationId = req.params[0]; // or req.data.ID depending on action signature
+    return handleGenerateThankYouMessage.call(this, req, 'Donations');
+  });
 
-    const donation = await SELECT.one.from(Donations).where({ ID: donationId });
-    if (!donation) {
-      req.error(404, 'Donation not found');
-    }
-
-    const donor = await SELECT.one.from(Donors).where({ ID: donation.donor_ID });
-    if (!donor) {
-      req.error(404, 'Donor not found');
-    }
-
-    const message = await generateThankYouMessage(donation, donor);
-    return { message };
+  /**
+   * Register handler for DRAFT entity (when editing)
+   */
+  this.on('generateThankYouMessage', 'Donations.drafts', async (req) => {
+    return handleGenerateThankYouMessage.call(this, req, 'Donations.drafts');
   });
 
   /**
@@ -148,34 +133,35 @@ this.before(['CREATE', 'UPDATE'], 'Donations', async (req) => {
    */
 
   async function generateThankYouMessage(donation, donor) {
+    const amount = Number(donation.amount) || 0;
+    const currency = donation.currencyCode || '';
+    const campaign = donation.campaign || 'our recent initiative';
+    const cause = donation.cause || 'our community programmes';
+    const impact = calculateImpact(amount, cause);
+
     try {
-      const amount = Number(donation.amount) || 0;
-      const currency = donation.currencyCode || '';  // ✅ use currencyCode
-      const campaign = donation.campaign || 'our recent initiative';
-      const cause = donation.cause || 'our community programmes';
-
-      const impact = calculateImpact(amount, cause);
-
       const promptText = `Generate a warm, personalized thank you message for a donor with the following details:
-- Donor Name: ${donor.name}
-- Donation Amount: ${amount} ${currency}
-- Campaign: ${campaign}
-- Cause: ${cause}
-- Estimated Impact: ${impact}
-- Is Recurring Donor: ${donor.isRecurringDonor ? 'Yes' : 'No'}
+                        - Donor Name: ${donor.name}
+                        - Donation Amount: ${amount} ${currency}
+                        - Campaign: ${campaign}
+                        - Cause: ${cause}
+                        - Estimated Impact: ${impact}
+                        - Is Recurring Donor: ${donor.isRecurringDonor ? 'Yes' : 'No'}
 
-Requirements:
-- Start with "Dear ${donor.name},"
-- Thank them for their ${donor.isRecurringDonor ? 'continued support' : 'generous donation'}
-- Mention the specific campaign and cause
-- Include the concrete impact their donation will have (use the estimated impact)
-- Keep it warm, professional, and sincere
-- Maximum 150 words
-- End the message with exactly this closing on its own line: "Warm regards."
-- Do NOT add any organization or person name after "Warm regards,"
+                        Requirements:
+                        - Start with "Dear ${donor.name},"
+                        - Thank them for their ${donor.isRecurringDonor ? 'continued support' : 'generous donation'}
+                        - Mention the specific campaign and cause
+                        - Include the concrete impact their donation will have (use the estimated impact)
+                        - Keep it warm, professional, and sincere
+                        - Maximum 150 words
+                        - End the message with exactly this closing on its own line: "Warm regards."
+                        - Do NOT add any organization or person name after "Warm regards,"
 
-Generate only the message text, no additional formatting or explanations.`;
+                        Generate only the message text, no additional formatting or explanations.`;
 
+      console.log('📞 Calling Orchestration API with GPT-4o...');
+      
       const orchestrationClient = new OrchestrationClient({
         promptTemplating: {
           model: {
@@ -197,8 +183,13 @@ Generate only the message text, no additional formatting or explanations.`;
         }
       });
 
-      console.log('Calling Orchestration (gpt-4o)...');
       const response = await orchestrationClient.chatCompletion();
+      
+      // Check if response exists before trying to get content
+      if (!response) {
+        throw new Error('No response from Orchestration API');
+      }
+
       const aiMessage = response.getContent();
 
       if (!aiMessage) {
@@ -207,9 +198,13 @@ Generate only the message text, no additional formatting or explanations.`;
 
       console.log('✅ AI generation via Orchestration successful');
       return aiMessage;
+      
     } catch (error) {
-      console.error('AI Generation Error (Orchestration):', error);
-      console.log('Falling back to template-based message');
+      console.error('❌ AI Generation Error (Orchestration):', error.message);
+      console.error('Error details:', error);
+      console.log('🔄 Falling back to template-based message');
+      
+      // Return fallback message instead of throwing error
       return generateFallbackMessage(donation, donor);
     }
   }
@@ -255,7 +250,7 @@ Generate only the message text, no additional formatting or explanations.`;
 
   function generateFallbackMessage(donation, donor) {
     const amount = Number(donation.amount) || 0;
-    const currency = donation.currencyCode || '';  // ✅ use currencyCode
+    const currency = donation.currencyCode || '';
     const campaign = donation.campaign || 'our recent initiative';
     const cause = donation.cause || 'our community programmes';
 
@@ -263,11 +258,10 @@ Generate only the message text, no additional formatting or explanations.`;
 
     return `Dear ${donor.name},
 
-Thank you for your ${donor.isRecurringDonor ? 'continued support' : 'generous donation'} to our ${campaign} campaign. Your ${amount} ${currency} donation will help ${impact}.
+      Thank you for your ${donor.isRecurringDonor ? 'continued support' : 'generous donation'} to our ${campaign} campaign. Your ${amount} ${currency} donation will help ${impact}.
 
-Your generosity makes a real difference in the lives of those we serve. Together, we're creating lasting positive change in ${cause}.
+      Your generosity makes a real difference in the lives of those we serve. Together, we're creating lasting positive change in ${cause}.
 
-With heartfelt gratitude,
-The ${campaign} Team`;
+      Warm regards.`;
   }
 });

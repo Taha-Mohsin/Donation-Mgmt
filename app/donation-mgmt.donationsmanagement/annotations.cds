@@ -51,7 +51,7 @@ annotate service.Donations with {
     donorName  @readonly;
     donorEmail @readonly;
     donorPhone @readonly;
-    summary    @readonly;
+    summary    @readonly @UI.MultiLineText;
 };
 
 // --- Main form layout (General Information) ---
@@ -116,6 +116,22 @@ annotate service.Donations with @(
     }
 );
 
+// --- Action for AI Summary section ---
+annotate service.Donations with @(
+    UI.FieldGroup #AISummaryActions : {
+        $Type : 'UI.FieldGroupType',
+        Data  : [
+            {
+                $Type       : 'UI.DataFieldForAction',
+                Action      : 'donation_MgmtSrv.generateThankYouMessage',
+                Label       : 'Generate',
+                Emphasized  : true,
+                ![@UI.Hidden] : false
+            }
+        ]
+    }
+);
+
 // --- Facets: show General Information + AI Summary as separate sections ---
 annotate service.Donations with @(
     UI.Facets : [
@@ -126,10 +142,21 @@ annotate service.Donations with @(
             Target : '@UI.FieldGroup#Main'
         },
         {
-            $Type  : 'UI.ReferenceFacet',
-            ID     : 'AISummaryFacet',
-            Label  : 'AI Summary',
-            Target : '@UI.FieldGroup#AISummary'
+            $Type   : 'UI.CollectionFacet',
+            ID      : 'AISummaryFacet',
+            Label   : 'Thank You Message',
+            Facets  : [
+                {
+                    $Type  : 'UI.ReferenceFacet',
+                    ID     : 'AISummaryActions',
+                    Target : '@UI.FieldGroup#AISummaryActions'
+                },
+                {
+                    $Type  : 'UI.ReferenceFacet',
+                    ID     : 'AISummaryContent',
+                    Target : '@UI.FieldGroup#AISummary'
+                }
+            ]
         }
     ]
 );
