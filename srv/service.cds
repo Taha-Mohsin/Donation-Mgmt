@@ -15,4 +15,11 @@ service donation_MgmtSrv {
     )
     action generateThankYouMessage() returns { message: String; };
   };
+
+  @readonly
+    entity Analytics as projection on my.Analytics actions {
+      action refresh();
+    };
+
 }
+  

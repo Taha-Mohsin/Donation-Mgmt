@@ -1,0 +1,177 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "donationmgmt.donors",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.20.0",
+      "toolsId": "cbf1567c-453b-45dd-aead-915e08e0b993"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/service/donation_Mgmt/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "donationmgmtdonors-display": {
+          "semanticObject": "donationmgmtdonors",
+          "action": "display",
+          "title": "{{donationmgmtdonors-display.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.13",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "donationmgmt.donors.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "DonorsList",
+          "target": "DonorsList"
+        },
+        {
+          "pattern": "Donors({key}):?query:",
+          "name": "DonorsObjectPage",
+          "target": "DonorsObjectPage"
+        },
+        {
+          "pattern": "Donors({key})/donations({key2}):?query:",
+          "name": "DonationsObjectPage",
+          "target": "DonationsObjectPage"
+        }
+      ],
+      "targets": {
+        "DonorsList": {
+          "type": "Component",
+          "id": "DonorsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Donors",
+              "variantManagement": "Page",
+              "navigation": {
+                "Donors": {
+                  "detail": {
+                    "route": "DonorsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "DonorsObjectPage": {
+          "type": "Component",
+          "id": "DonorsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Donors",
+              "navigation": {
+                "donations": {
+                  "detail": {
+                    "route": "DonationsObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "DonationsObjectPage": {
+          "type": "Component",
+          "id": "DonationsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Donors/donations"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}

@@ -27,7 +27,7 @@
                     return Controller.extend("PreviewController", {
                         onInit: function () {
 
-                            const data = {"Services":[{"ServiceName":"donation_MgmtSrv","DetailsURL":"./service/donation_Mgmt/","Metadata":"./service/donation_Mgmt/$metadata","Entities":[{"Name":"Donors","URL":"./service/donation_Mgmt/Donors","FioriURL":"$fiori-preview/donation_MgmtSrv/Donors#preview-app"},{"Name":"Donations","URL":"./service/donation_Mgmt/Donations","FioriURL":"$fiori-preview/donation_MgmtSrv/Donations#preview-app"}],"EntitiesCount":2}]}
+                            const data = {"Services":[{"ServiceName":"donation_MgmtSrv","DetailsURL":"./service/donation_Mgmt/","Metadata":"./service/donation_Mgmt/$metadata","Entities":[{"Name":"Donors","URL":"./service/donation_Mgmt/Donors","FioriURL":"$fiori-preview/donation_MgmtSrv/Donors#preview-app"},{"Name":"Donations","URL":"./service/donation_Mgmt/Donations","FioriURL":"$fiori-preview/donation_MgmtSrv/Donations#preview-app"},{"Name":"Analytics","URL":"./service/donation_Mgmt/Analytics","FioriURL":"$fiori-preview/donation_MgmtSrv/Analytics#preview-app"}],"EntitiesCount":3}]}
                             this.getView().setModel(new JSONModel(data));
                         }
                     });

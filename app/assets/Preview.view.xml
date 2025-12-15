@@ -27,7 +27,7 @@
         </l:BlockLayoutRow>
         <l:BlockLayoutRow class="blockLayoutContentRow">
             <l:BlockLayoutCell id="webApplications" width='2'>
-                <Title titleStyle="H3" text="Web Applications (1)"/>
+                <Title titleStyle="H3" text="Web Applications (3)"/>
                 <core:HTML 
                     content='&lt;hr class=&quot;webAppSeparator&quot;&gt;'>
                 </core:HTML>

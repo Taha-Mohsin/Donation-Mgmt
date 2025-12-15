@@ -1,0 +1,1 @@
+using donation_MgmtSrv as service from '../../srv/service';

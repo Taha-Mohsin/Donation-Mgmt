@@ -3,7 +3,96 @@ const cds = require('@sap/cds');
 const { OrchestrationClient } = require('@sap-ai-sdk/orchestration');
 
 module.exports = cds.service.impl(async function () {
-  const { Donations, Donors } = this.entities;
+  const { Donations, Donors, Analytics } = this.entities;
+
+  /**
+   * Handle READ for Analytics - return computed analytics data
+   */
+  this.on('READ', 'Analytics', async (req) => {
+    console.log('🔵 Analytics READ called');
+    
+    try {
+      const analytics = await computeAnalytics();
+      
+      // Return as singleton with ID '1'
+      return [{
+        ID: '1',
+        narrative: analytics.narrative,
+        totalDonations: analytics.totalDonations,
+        totalAmount: analytics.totalAmount,
+        lastUpdated: new Date().toISOString()
+      }];
+    } catch (err) {
+      console.error('❌ Error reading analytics:', err);
+      return [{
+        ID: '1',
+        narrative: 'Unable to generate analytics at this time.',
+        totalDonations: 0,
+        totalAmount: 0,
+        lastUpdated: new Date().toISOString()
+      }];
+    }
+  });
+
+  /**
+   * Handle refresh action on Analytics
+   */
+  this.on('refresh', 'Analytics', async (req) => {
+    console.log('🔵 Analytics refresh action called');
+    
+    try {
+      const analytics = await computeAnalytics();
+      
+      return {
+        ID: '1',
+        narrative: analytics.narrative,
+        totalDonations: analytics.totalDonations,
+        totalAmount: analytics.totalAmount,
+        lastUpdated: new Date().toISOString()
+      };
+    } catch (err) {
+      console.error('❌ Error refreshing analytics:', err);
+      req.error(500, 'Failed to refresh analytics: ' + err.message);
+    }
+  });
+
+  /**
+   * Compute analytics from donations data
+   */
+  async function computeAnalytics() {
+    // Get donations from the last 12 months
+    const twelveMonthsAgo = new Date();
+    twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+    const twelveMonthsAgoStr = twelveMonthsAgo.toISOString().split('T')[0];
+
+    const donations = await SELECT.from(Donations)
+      .where({ donationDate: { '>=': twelveMonthsAgoStr } });
+
+    console.log(`✅ Found ${donations.length} donations in last 12 months`);
+
+    if (donations.length === 0) {
+      return {
+        narrative: 'No donation data available for the last 12 months to generate insights.',
+        totalDonations: 0,
+        totalAmount: 0
+      };
+    }
+
+    // Calculate analytics
+    const stats = calculateAnalytics(donations);
+    console.log('✅ Analytics calculated:', stats);
+
+    // Generate AI narrative
+    console.log('🤖 Generating AI narrative...');
+    const narrative = await generateAINarrative(stats);
+    console.log('✅ Narrative generated successfully');
+
+    return {
+      narrative,
+      totalDonations: stats.totalDonations,
+      totalAmount: stats.totalAmount
+    };
+  }
 
   /**
    * Auto-populate donor snapshot fields when donor is selected
@@ -11,7 +100,6 @@ module.exports = cds.service.impl(async function () {
   this.before(['CREATE', 'UPDATE'], 'Donations', async (req) => {
     const donation = req.data;
 
-    // In DB this is the managed association FK column
     if (donation.donor_ID) {
       const donor = await SELECT.one.from(Donors).where({ ID: donation.donor_ID });
 
@@ -41,7 +129,6 @@ module.exports = cds.service.impl(async function () {
     console.log('Entity:', entityName);
     console.log('Request params:', req.params);
     
-    // Get the ID - works for both draft and active
     const donationId = req.params[0]?.ID || req.params[0];
     console.log('Donation ID:', donationId);
 
@@ -51,16 +138,12 @@ module.exports = cds.service.impl(async function () {
     }
 
     try {
-      // Query the appropriate entity (draft or active)
-      // For drafts, use the string name directly; for active, use the entity object
       let donation;
       if (entityName === 'Donations.drafts') {
-        // Use CDS.ql for draft queries with string name
         donation = await SELECT.one
           .from('donation_MgmtSrv.Donations.drafts')
           .where({ ID: donationId });
       } else {
-        // Use entity object for active entity
         donation = await SELECT.one
           .from(Donations)
           .where({ ID: donationId });
@@ -92,7 +175,6 @@ module.exports = cds.service.impl(async function () {
       console.log('✅ Message generated successfully');
       console.log('Message preview:', message.substring(0, 100) + '...');
       
-      // Update the appropriate entity (draft or active)
       if (entityName === 'Donations.drafts') {
         await UPDATE('donation_MgmtSrv.Donations.drafts')
           .set({ summary: message })
@@ -129,8 +211,185 @@ module.exports = cds.service.impl(async function () {
   });
 
   /**
+   * NEW: Generate AI-powered analytics narrative (deprecated - use Analytics entity instead)
+   * Kept for backward compatibility
+   */
+  this.on('generateAnalyticsNarrative', async (req) => {
+    console.log('🔵 generateAnalyticsNarrative action called (deprecated)');
+    const analytics = await computeAnalytics();
+    return { narrative: analytics.narrative };
+  });
+
+  /**
    * ===== Helper functions =====
    */
+
+  function calculateAnalytics(donations) {
+    const total = donations.length;
+    
+    // Campaign analysis
+    const campaignStats = {};
+    const causeStats = {};
+    const cityStats = {};
+    const monthlyStats = {};
+    
+    let totalAmount = 0;
+
+    donations.forEach(d => {
+      const amount = Number(d.amount) || 0;
+      totalAmount += amount;
+
+      // By campaign
+      if (d.campaign) {
+        campaignStats[d.campaign] = (campaignStats[d.campaign] || 0) + amount;
+      }
+
+      // By cause
+      if (d.cause) {
+        causeStats[d.cause] = (causeStats[d.cause] || 0) + amount;
+      }
+
+      // By city
+      if (d.city) {
+        cityStats[d.city] = (cityStats[d.city] || 0) + amount;
+      }
+
+      // By month
+      if (d.donationDate) {
+        const month = d.donationDate.substring(0, 7); // YYYY-MM
+        monthlyStats[month] = (monthlyStats[month] || 0) + amount;
+      }
+    });
+
+    // Top causes by percentage
+    const topCauses = Object.entries(causeStats)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([cause, amount]) => ({
+        cause,
+        amount,
+        percentage: ((amount / totalAmount) * 100).toFixed(1)
+      }));
+
+    // Top cities
+    const topCities = Object.entries(cityStats)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([city, amount]) => ({ city, amount }));
+
+    // Month-over-month growth
+    const months = Object.keys(monthlyStats).sort();
+    let momGrowth = null;
+    if (months.length >= 2) {
+      const lastMonth = monthlyStats[months[months.length - 1]];
+      const prevMonth = monthlyStats[months[months.length - 2]];
+      momGrowth = (((lastMonth - prevMonth) / prevMonth) * 100).toFixed(1);
+    }
+
+    return {
+      totalDonations: total,
+      totalAmount,
+      topCauses,
+      topCities,
+      momGrowth,
+      lastMonth: months[months.length - 1],
+      prevMonth: months[months.length - 2]
+    };
+  }
+
+  async function generateAINarrative(analytics) {
+    const promptText = `Generate a concise, data-driven narrative summary based on these donation analytics:
+
+Total Donations: ${analytics.totalDonations}
+Total Amount: $${analytics.totalAmount.toLocaleString()}
+
+Top Causes (by amount):
+${analytics.topCauses.map(c => `- ${c.cause}: ${c.percentage}% ($${c.amount.toLocaleString()})`).join('\n')}
+
+Top Cities (by amount):
+${analytics.topCities.map(c => `- ${c.city}: $${c.amount.toLocaleString()}`).join('\n')}
+
+${analytics.momGrowth ? `Month-over-Month Growth: ${analytics.momGrowth}% (${analytics.prevMonth} to ${analytics.lastMonth})` : ''}
+
+Requirements:
+- Write a 2-3 sentence narrative that highlights the most important trends
+- Focus on percentages for causes, top city contributor, and growth trends
+- Use a professional, analytical tone
+- Be specific with numbers and percentages
+- Example style: "In the last 12 months, Education and Healthcare campaigns accounted for 65% of donations. San Francisco donors contributed the highest ($200,000), while New York showed a 20% MoM growth."
+
+Generate only the narrative text, no additional formatting or explanations.`;
+
+    try {
+      const orchestrationClient = new OrchestrationClient({
+        promptTemplating: {
+          model: {
+            name: 'gpt-4o'
+          },
+          prompt: {
+            template: [
+              {
+                role: 'system',
+                content: 'You are a data analyst specializing in nonprofit fundraising analytics. Create clear, concise narratives from donation data.'
+              },
+              {
+                role: 'user',
+                content: promptText
+              }
+            ]
+          }
+        }
+      });
+
+      console.log('📞 Calling Orchestration API for narrative...');
+      const response = await orchestrationClient.chatCompletion();
+      
+      if (!response) {
+        throw new Error('No response from Orchestration API');
+      }
+
+      const narrative = response.getContent();
+
+      if (!narrative) {
+        throw new Error('AI response did not contain a narrative');
+      }
+
+      console.log('✅ AI narrative generation successful');
+      return narrative;
+      
+    } catch (error) {
+      console.error('❌ AI Narrative Error:', error.message);
+      console.log('🔄 Falling back to template-based narrative');
+      return generateFallbackNarrative(analytics);
+    }
+  }
+
+  function generateFallbackNarrative(analytics) {
+    const topCausesText = analytics.topCauses
+      .slice(0, 2)
+      .map(c => c.cause)
+      .join(' and ');
+    
+    const topCausesPercentage = analytics.topCauses
+      .slice(0, 2)
+      .reduce((sum, c) => sum + parseFloat(c.percentage), 0)
+      .toFixed(0);
+
+    const topCity = analytics.topCities[0];
+    
+    let narrative = `In the last 12 months, ${topCausesText} campaigns accounted for ${topCausesPercentage}% of donations.`;
+    
+    if (topCity) {
+      narrative += ` ${topCity.city} donors contributed the highest ($${topCity.amount.toLocaleString()}).`;
+    }
+
+    if (analytics.momGrowth) {
+      const growthSign = analytics.momGrowth > 0 ? '+' : '';
+      narrative += ` Overall donations showed ${growthSign}${analytics.momGrowth}% month-over-month growth.`;
+    }
+
+    return narrative;
+  }
 
   async function generateThankYouMessage(donation, donor) {
     const amount = Number(donation.amount) || 0;
@@ -141,24 +400,24 @@ module.exports = cds.service.impl(async function () {
 
     try {
       const promptText = `Generate a warm, personalized thank you message for a donor with the following details:
-                        - Donor Name: ${donor.name}
-                        - Donation Amount: ${amount} ${currency}
-                        - Campaign: ${campaign}
-                        - Cause: ${cause}
-                        - Estimated Impact: ${impact}
-                        - Is Recurring Donor: ${donor.isRecurringDonor ? 'Yes' : 'No'}
+- Donor Name: ${donor.name}
+- Donation Amount: ${amount} ${currency}
+- Campaign: ${campaign}
+- Cause: ${cause}
+- Estimated Impact: ${impact}
+- Is Recurring Donor: ${donor.isRecurringDonor ? 'Yes' : 'No'}
 
-                        Requirements:
-                        - Start with "Dear ${donor.name},"
-                        - Thank them for their ${donor.isRecurringDonor ? 'continued support' : 'generous donation'}
-                        - Mention the specific campaign and cause
-                        - Include the concrete impact their donation will have (use the estimated impact)
-                        - Keep it warm, professional, and sincere
-                        - Maximum 150 words
-                        - End the message with exactly this closing on its own line: "Warm regards."
-                        - Do NOT add any organization or person name after "Warm regards,"
+Requirements:
+- Start with "Dear ${donor.name},"
+- Thank them for their ${donor.isRecurringDonor ? 'continued support' : 'generous donation'}
+- Mention the specific campaign and cause
+- Include the concrete impact their donation will have (use the estimated impact)
+- Keep it warm, professional, and sincere
+- Maximum 150 words
+- End the message with exactly this closing on its own line: "Warm regards."
+- Do NOT add any organization or person name after "Warm regards,"
 
-                        Generate only the message text, no additional formatting or explanations.`;
+Generate only the message text, no additional formatting or explanations.`;
 
       console.log('📞 Calling Orchestration API with GPT-4o...');
       
@@ -185,7 +444,6 @@ module.exports = cds.service.impl(async function () {
 
       const response = await orchestrationClient.chatCompletion();
       
-      // Check if response exists before trying to get content
       if (!response) {
         throw new Error('No response from Orchestration API');
       }
@@ -204,7 +462,6 @@ module.exports = cds.service.impl(async function () {
       console.error('Error details:', error);
       console.log('🔄 Falling back to template-based message');
       
-      // Return fallback message instead of throwing error
       return generateFallbackMessage(donation, donor);
     }
   }
@@ -258,10 +515,10 @@ module.exports = cds.service.impl(async function () {
 
     return `Dear ${donor.name},
 
-      Thank you for your ${donor.isRecurringDonor ? 'continued support' : 'generous donation'} to our ${campaign} campaign. Your ${amount} ${currency} donation will help ${impact}.
+Thank you for your ${donor.isRecurringDonor ? 'continued support' : 'generous donation'} to our ${campaign} campaign. Your ${amount} ${currency} donation will help ${impact}.
 
-      Your generosity makes a real difference in the lives of those we serve. Together, we're creating lasting positive change in ${cause}.
+Your generosity makes a real difference in the lives of those we serve. Together, we're creating lasting positive change in ${cause}.
 
-      Warm regards.`;
+Warm regards.`;
   }
 });

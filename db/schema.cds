@@ -29,3 +29,12 @@ entity Donations : cuid {
 
 }
 
+// Virtual entity for Analytics dashboard
+entity Analytics {
+  key ID          : String; // Always '1' - singleton
+  narrative       : String(5000);
+  totalDonations  : Integer;
+  totalAmount     : Decimal(15, 2);
+  lastUpdated     : DateTime;
+}
+
