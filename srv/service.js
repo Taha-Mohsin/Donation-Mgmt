@@ -6,93 +6,90 @@ module.exports = cds.service.impl(async function () {
   const { Donations, Donors, Analytics } = this.entities;
 
   /**
-   * Handle READ for Analytics - return computed analytics data
+   * =================== ANALYTICS HANDLERS ===================
    */
-  this.on('READ', 'Analytics', async (req) => {
-    console.log('🔵 Analytics READ called');
-    
+
+  /**
+   * Before CREATE / UPDATE on Analytics
+   * - Uses periodStart + periodEnd from the UI
+   * - Computes totalDonations, totalAmount, narrative for that range
+   */
+  this.before(['CREATE', 'UPDATE'], 'Analytics', async (req) => {
+    console.log('🔵 Analytics before CREATE/UPDATE called:', req.data);
+
+    const { periodStart, periodEnd } = req.data;
+
+    if (!periodStart || !periodEnd) {
+      console.log('ℹ️ No periodStart/periodEnd provided, skipping analytics calculation');
+      return;
+    }
+
     try {
-      const analytics = await computeAnalytics();
-      
-      // Return as singleton with ID '1'
-      return [{
-        ID: '1',
-        narrative: analytics.narrative,
-        totalDonations: analytics.totalDonations,
-        totalAmount: analytics.totalAmount,
-        lastUpdated: new Date().toISOString()
-      }];
+      const analytics = await computeAnalytics(periodStart, periodEnd);
+
+      req.data.totalDonations = analytics.totalDonations;
+      req.data.totalAmount = analytics.totalAmount;
+      req.data.narrative = analytics.narrative;
+
+      console.log('✅ Analytics fields set on req.data', {
+        totalDonations: req.data.totalDonations,
+        totalAmount: req.data.totalAmount,
+      });
     } catch (err) {
-      console.error('❌ Error reading analytics:', err);
-      return [{
-        ID: '1',
-        narrative: 'Unable to generate analytics at this time.',
-        totalDonations: 0,
-        totalAmount: 0,
-        lastUpdated: new Date().toISOString()
-      }];
+      console.error('❌ Error computing analytics:', err);
+      req.error(500, 'Failed to generate analytics: ' + err.message);
     }
   });
 
   /**
-   * Handle refresh action on Analytics
+   * Bound action Analytics.generate()
+   * - Recomputes totals + narrative for the selected Analytics row
+   *   using its stored periodStart / periodEnd
    */
-  this.on('refresh', 'Analytics', async (req) => {
-    console.log('🔵 Analytics refresh action called');
-    
+  this.on('generate', 'Analytics', async (req) => {
+    console.log('🔵 Analytics generate action called');
+
     try {
-      const analytics = await computeAnalytics();
-      
-      return {
-        ID: '1',
-        narrative: analytics.narrative,
-        totalDonations: analytics.totalDonations,
-        totalAmount: analytics.totalAmount,
-        lastUpdated: new Date().toISOString()
-      };
+      const analyticsId = req.params[0]?.ID || req.params[0];
+      if (!analyticsId) {
+        req.error(400, 'Analytics ID is required for generate');
+      }
+
+      const existing = await SELECT.one.from(Analytics).where({ ID: analyticsId });
+      if (!existing) {
+        req.error(404, 'Analytics record not found');
+      }
+
+      const { periodStart, periodEnd } = existing;
+      if (!periodStart || !periodEnd) {
+        req.error(400, 'Cannot generate analytics without periodStart and periodEnd');
+      }
+
+      console.log('📊 Recomputing analytics for', { periodStart, periodEnd });
+
+      const analytics = await computeAnalytics(periodStart, periodEnd);
+
+      await UPDATE(Analytics)
+        .set({
+          totalDonations: analytics.totalDonations,
+          totalAmount: analytics.totalAmount,
+          narrative: analytics.narrative,
+        })
+        .where({ ID: analyticsId });
+
+      console.log('✅ Analytics insight updated');
+
+      // Return the updated record
+      return await SELECT.one.from(Analytics).where({ ID: analyticsId });
     } catch (err) {
-      console.error('❌ Error refreshing analytics:', err);
-      req.error(500, 'Failed to refresh analytics: ' + err.message);
+      console.error('❌ Error generating analytics:', err);
+      req.error(500, 'Failed to generate analytics: ' + err.message);
     }
   });
 
   /**
-   * Compute analytics from donations data
+   * =================== DONATIONS HANDLERS ===================
    */
-  async function computeAnalytics() {
-    // Get donations from the last 12 months
-    const twelveMonthsAgo = new Date();
-    twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
-    const twelveMonthsAgoStr = twelveMonthsAgo.toISOString().split('T')[0];
-
-    const donations = await SELECT.from(Donations)
-      .where({ donationDate: { '>=': twelveMonthsAgoStr } });
-
-    console.log(`✅ Found ${donations.length} donations in last 12 months`);
-
-    if (donations.length === 0) {
-      return {
-        narrative: 'No donation data available for the last 12 months to generate insights.',
-        totalDonations: 0,
-        totalAmount: 0
-      };
-    }
-
-    // Calculate analytics
-    const stats = calculateAnalytics(donations);
-    console.log('✅ Analytics calculated:', stats);
-
-    // Generate AI narrative
-    console.log('🤖 Generating AI narrative...');
-    const narrative = await generateAINarrative(stats);
-    console.log('✅ Narrative generated successfully');
-
-    return {
-      narrative,
-      totalDonations: stats.totalDonations,
-      totalAmount: stats.totalAmount
-    };
-  }
 
   /**
    * Auto-populate donor snapshot fields when donor is selected
@@ -121,6 +118,10 @@ module.exports = cds.service.impl(async function () {
   });
 
   /**
+   * =================== THANK-YOU MESSAGE HELPERS ===================
+   */
+
+  /**
    * Helper function to generate AI message
    * Used by both active and draft handlers
    */
@@ -128,7 +129,7 @@ module.exports = cds.service.impl(async function () {
     console.log('🔵 generateThankYouMessage action called');
     console.log('Entity:', entityName);
     console.log('Request params:', req.params);
-    
+
     const donationId = req.params[0]?.ID || req.params[0];
     console.log('Donation ID:', donationId);
 
@@ -144,11 +145,9 @@ module.exports = cds.service.impl(async function () {
           .from('donation_MgmtSrv.Donations.drafts')
           .where({ ID: donationId });
       } else {
-        donation = await SELECT.one
-          .from(Donations)
-          .where({ ID: donationId });
+        donation = await SELECT.one.from(Donations).where({ ID: donationId });
       }
-      
+
       if (!donation) {
         console.error('❌ Donation not found:', donationId);
         req.error(404, 'Donation not found');
@@ -160,10 +159,8 @@ module.exports = cds.service.impl(async function () {
         req.error(400, 'This donation must have a donor before generating a thank you message');
       }
 
-      const donor = await SELECT.one
-        .from(Donors)
-        .where({ ID: donation.donor_ID });
-      
+      const donor = await SELECT.one.from(Donors).where({ ID: donation.donor_ID });
+
       if (!donor) {
         console.error('❌ Donor not found:', donation.donor_ID);
         req.error(404, 'Donor not found for this donation');
@@ -174,7 +171,7 @@ module.exports = cds.service.impl(async function () {
       const message = await generateThankYouMessage(donation, donor);
       console.log('✅ Message generated successfully');
       console.log('Message preview:', message.substring(0, 100) + '...');
-      
+
       if (entityName === 'Donations.drafts') {
         await UPDATE('donation_MgmtSrv.Donations.drafts')
           .set({ summary: message })
@@ -184,11 +181,10 @@ module.exports = cds.service.impl(async function () {
           .set({ summary: message })
           .where({ ID: donationId });
       }
-      
+
       console.log('✅ Summary saved to database');
 
       return { message };
-      
     } catch (err) {
       console.error('❌ Error in generateThankYouMessage:', err);
       console.error('Stack:', err.stack);
@@ -211,31 +207,81 @@ module.exports = cds.service.impl(async function () {
   });
 
   /**
-   * NEW: Generate AI-powered analytics narrative (deprecated - use Analytics entity instead)
-   * Kept for backward compatibility
+   * =================== ANALYTICS CORE FUNCTIONS ===================
    */
-  this.on('generateAnalyticsNarrative', async (req) => {
-    console.log('🔵 generateAnalyticsNarrative action called (deprecated)');
-    const analytics = await computeAnalytics();
-    return { narrative: analytics.narrative };
-  });
 
   /**
-   * ===== Helper functions =====
+   * Compute analytics from donations data between periodStart and periodEnd
+   * periodStart / periodEnd are expected as 'YYYY-MM-DD' (strings) or Date objects.
    */
+   /**
+   * Compute analytics from donations data BETWEEN periodStart and periodEnd (inclusive)
+   * periodStart / periodEnd can be 'YYYY-MM-DD' strings or Date objects.
+   */
+  async function computeAnalytics(periodStart, periodEnd) {
+    if (!periodStart || !periodEnd) {
+      throw new Error('periodStart and periodEnd are required for analytics');
+    }
+
+    // Normalise to 'YYYY-MM-DD'
+    const fromDate = periodStart instanceof Date ? periodStart : new Date(periodStart);
+    const toDate   = periodEnd   instanceof Date ? periodEnd   : new Date(periodEnd);
+
+    const from = fromDate.toISOString().split('T')[0];
+    const to   = toDate.toISOString().split('T')[0];
+
+    console.log('📊 Computing analytics strictly from', from, 'to', to);
+
+    // ✅ Use explicit where string so we KNOW the condition is correct
+    const donations = await SELECT.from(Donations)
+      .where`donationDate >= ${from} and donationDate <= ${to}`;
+
+    console.log(`✅ Found ${donations.length} donations in selected period`);
+
+    if (donations.length === 0) {
+      return {
+        narrative: `No donation data available between ${from} and ${to} to generate insights.`,
+        totalDonations: 0,
+        totalAmount: 0
+      };
+    }
+
+    // Log min/max donation dates in this subset (for sanity)
+    const dates = donations
+      .map(d => d.donationDate)
+      .filter(Boolean)
+      .sort();
+    console.log('🗓 Date range in result:', dates[0], '→', dates[dates.length - 1]);
+
+    const stats = calculateAnalytics(donations);
+    console.log('✅ Analytics calculated for selected period:', {
+      totalDonations: stats.totalDonations,
+      totalAmount: stats.totalAmount
+    });
+
+    const narrative = await generateAINarrative(stats);
+    console.log('✅ Narrative generated successfully');
+
+    return {
+      narrative,
+      totalDonations: stats.totalDonations,
+      totalAmount: stats.totalAmount
+    };
+  }
+
 
   function calculateAnalytics(donations) {
     const total = donations.length;
-    
+
     // Campaign analysis
     const campaignStats = {};
     const causeStats = {};
     const cityStats = {};
     const monthlyStats = {};
-    
+
     let totalAmount = 0;
 
-    donations.forEach(d => {
+    donations.forEach((d) => {
       const amount = Number(d.amount) || 0;
       totalAmount += amount;
 
@@ -268,7 +314,7 @@ module.exports = cds.service.impl(async function () {
       .map(([cause, amount]) => ({
         cause,
         amount,
-        percentage: ((amount / totalAmount) * 100).toFixed(1)
+        percentage: ((amount / totalAmount) * 100).toFixed(1),
       }));
 
     // Top cities
@@ -280,10 +326,19 @@ module.exports = cds.service.impl(async function () {
     // Month-over-month growth
     const months = Object.keys(monthlyStats).sort();
     let momGrowth = null;
+    let lastMonthKey = null;
+    let prevMonthKey = null;
+
     if (months.length >= 2) {
-      const lastMonth = monthlyStats[months[months.length - 1]];
-      const prevMonth = monthlyStats[months[months.length - 2]];
-      momGrowth = (((lastMonth - prevMonth) / prevMonth) * 100).toFixed(1);
+      lastMonthKey = months[months.length - 1];
+      prevMonthKey = months[months.length - 2];
+
+      const lastMonth = monthlyStats[lastMonthKey];
+      const prevMonth = monthlyStats[prevMonthKey];
+
+      if (prevMonth !== 0) {
+        momGrowth = (((lastMonth - prevMonth) / prevMonth) * 100).toFixed(1);
+      }
     }
 
     return {
@@ -292,8 +347,8 @@ module.exports = cds.service.impl(async function () {
       topCauses,
       topCities,
       momGrowth,
-      lastMonth: months[months.length - 1],
-      prevMonth: months[months.length - 2]
+      lastMonth: lastMonthKey,
+      prevMonth: prevMonthKey,
     };
   }
 
@@ -304,12 +359,18 @@ Total Donations: ${analytics.totalDonations}
 Total Amount: $${analytics.totalAmount.toLocaleString()}
 
 Top Causes (by amount):
-${analytics.topCauses.map(c => `- ${c.cause}: ${c.percentage}% ($${c.amount.toLocaleString()})`).join('\n')}
+${analytics.topCauses
+  .map((c) => `- ${c.cause}: ${c.percentage}% ($${c.amount.toLocaleString()})`)
+  .join('\n')}
 
 Top Cities (by amount):
-${analytics.topCities.map(c => `- ${c.city}: $${c.amount.toLocaleString()}`).join('\n')}
+${analytics.topCities.map((c) => `- ${c.city}: $${c.amount.toLocaleString()}`).join('\n')}
 
-${analytics.momGrowth ? `Month-over-Month Growth: ${analytics.momGrowth}% (${analytics.prevMonth} to ${analytics.lastMonth})` : ''}
+${
+  analytics.momGrowth
+    ? `Month-over-Month Growth: ${analytics.momGrowth}% (${analytics.prevMonth} to ${analytics.lastMonth})`
+    : ''
+}
 
 Requirements:
 - Write a 2-3 sentence narrative that highlights the most important trends
@@ -324,26 +385,27 @@ Generate only the narrative text, no additional formatting or explanations.`;
       const orchestrationClient = new OrchestrationClient({
         promptTemplating: {
           model: {
-            name: 'gpt-4o'
+            name: 'gpt-4o',
           },
           prompt: {
             template: [
               {
                 role: 'system',
-                content: 'You are a data analyst specializing in nonprofit fundraising analytics. Create clear, concise narratives from donation data.'
+                content:
+                  'You are a data analyst specializing in nonprofit fundraising analytics. Create clear, concise narratives from donation data.',
               },
               {
                 role: 'user',
-                content: promptText
-              }
-            ]
-          }
-        }
+                content: promptText,
+              },
+            ],
+          },
+        },
       });
 
       console.log('📞 Calling Orchestration API for narrative...');
       const response = await orchestrationClient.chatCompletion();
-      
+
       if (!response) {
         throw new Error('No response from Orchestration API');
       }
@@ -356,7 +418,6 @@ Generate only the narrative text, no additional formatting or explanations.`;
 
       console.log('✅ AI narrative generation successful');
       return narrative;
-      
     } catch (error) {
       console.error('❌ AI Narrative Error:', error.message);
       console.log('🔄 Falling back to template-based narrative');
@@ -367,18 +428,18 @@ Generate only the narrative text, no additional formatting or explanations.`;
   function generateFallbackNarrative(analytics) {
     const topCausesText = analytics.topCauses
       .slice(0, 2)
-      .map(c => c.cause)
+      .map((c) => c.cause)
       .join(' and ');
-    
+
     const topCausesPercentage = analytics.topCauses
       .slice(0, 2)
       .reduce((sum, c) => sum + parseFloat(c.percentage), 0)
       .toFixed(0);
 
     const topCity = analytics.topCities[0];
-    
-    let narrative = `In the last 12 months, ${topCausesText} campaigns accounted for ${topCausesPercentage}% of donations.`;
-    
+
+    let narrative = `In the selected period, ${topCausesText} campaigns accounted for ${topCausesPercentage}% of donations.`;
+
     if (topCity) {
       narrative += ` ${topCity.city} donors contributed the highest ($${topCity.amount.toLocaleString()}).`;
     }
@@ -391,9 +452,14 @@ Generate only the narrative text, no additional formatting or explanations.`;
     return narrative;
   }
 
+  /**
+   * =================== THANK-YOU AI GENERATION ===================
+   */
+
   async function generateThankYouMessage(donation, donor) {
     const amount = Number(donation.amount) || 0;
-    const currency = donation.currencyCode || '';
+    const currency =
+      donation.currencyCode || donation.currencycode || ''; // be safe with naming
     const campaign = donation.campaign || 'our recent initiative';
     const cause = donation.cause || 'our community programmes';
     const impact = calculateImpact(amount, cause);
@@ -409,7 +475,9 @@ Generate only the narrative text, no additional formatting or explanations.`;
 
 Requirements:
 - Start with "Dear ${donor.name},"
-- Thank them for their ${donor.isRecurringDonor ? 'continued support' : 'generous donation'}
+- Thank them for their ${
+        donor.isRecurringDonor ? 'continued support' : 'generous donation'
+      }
 - Mention the specific campaign and cause
 - Include the concrete impact their donation will have (use the estimated impact)
 - Keep it warm, professional, and sincere
@@ -420,30 +488,30 @@ Requirements:
 Generate only the message text, no additional formatting or explanations.`;
 
       console.log('📞 Calling Orchestration API with GPT-4o...');
-      
+
       const orchestrationClient = new OrchestrationClient({
         promptTemplating: {
           model: {
-            name: 'gpt-4o'
+            name: 'gpt-4o',
           },
           prompt: {
             template: [
               {
                 role: 'system',
                 content:
-                  'You are an expert fundraising copywriter specializing in nonprofit campaigns. Create warm, donor-focused messages that inspire continued support.'
+                  'You are an expert fundraising copywriter specializing in nonprofit campaigns. Create warm, donor-focused messages that inspire continued support.',
               },
               {
                 role: 'user',
-                content: promptText
-              }
-            ]
-          }
-        }
+                content: promptText,
+              },
+            ],
+          },
+        },
       });
 
       const response = await orchestrationClient.chatCompletion();
-      
+
       if (!response) {
         throw new Error('No response from Orchestration API');
       }
@@ -456,12 +524,11 @@ Generate only the message text, no additional formatting or explanations.`;
 
       console.log('✅ AI generation via Orchestration successful');
       return aiMessage;
-      
     } catch (error) {
       console.error('❌ AI Generation Error (Orchestration):', error.message);
       console.error('Error details:', error);
       console.log('🔄 Falling back to template-based message');
-      
+
       return generateFallbackMessage(donation, donor);
     }
   }
@@ -471,28 +538,28 @@ Generate only the message text, no additional formatting or explanations.`;
       Healthcare: {
         perUnit: 400,
         unit: 'rural health checkups',
-        description: 'health checkups'
+        description: 'health checkups',
       },
       Education: {
         perUnit: 500,
         unit: 'student scholarships',
-        description: 'students with education'
+        description: 'students with education',
       },
       Environment: {
         perUnit: 100,
         unit: 'trees planted',
-        description: 'trees planted'
+        description: 'trees planted',
       },
       'Hunger Relief': {
         perUnit: 50,
         unit: 'meals provided',
-        description: 'meals to families in need'
+        description: 'meals to families in need',
       },
       Hunger: {
         perUnit: 50,
         unit: 'meals provided',
-        description: 'meals to families in need'
-      }
+        description: 'meals to families in need',
+      },
     };
 
     const key = impacts[cause] ? cause : 'Healthcare';
@@ -507,7 +574,8 @@ Generate only the message text, no additional formatting or explanations.`;
 
   function generateFallbackMessage(donation, donor) {
     const amount = Number(donation.amount) || 0;
-    const currency = donation.currencyCode || '';
+    const currency =
+      donation.currencyCode || donation.currencycode || '';
     const campaign = donation.campaign || 'our recent initiative';
     const cause = donation.cause || 'our community programmes';
 
@@ -515,7 +583,9 @@ Generate only the message text, no additional formatting or explanations.`;
 
     return `Dear ${donor.name},
 
-Thank you for your ${donor.isRecurringDonor ? 'continued support' : 'generous donation'} to our ${campaign} campaign. Your ${amount} ${currency} donation will help ${impact}.
+Thank you for your ${
+      donor.isRecurringDonor ? 'continued support' : 'generous donation'
+    } to our ${campaign} campaign. Your ${amount} ${currency} donation will help ${impact}.
 
 Your generosity makes a real difference in the lives of those we serve. Together, we're creating lasting positive change in ${cause}.
 

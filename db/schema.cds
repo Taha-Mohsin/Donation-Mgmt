@@ -1,5 +1,5 @@
 namespace Donation_Mgmt;
-using { cuid } from '@sap/cds/common';
+using { cuid, managed } from '@sap/cds/common';
 
 @assert.unique: { name: [name] }
 entity Donors : cuid {
@@ -30,11 +30,13 @@ entity Donations : cuid {
 }
 
 // Virtual entity for Analytics dashboard
-entity Analytics {
-  key ID          : String; // Always '1' - singleton
+// NOW A PERSISTENT ENTITY - can store multiple insights over time
+entity Analytics : cuid, managed {
   narrative       : String(5000);
   totalDonations  : Integer;
   totalAmount     : Decimal(15, 2);
-  lastUpdated     : DateTime;
+  periodStart     : Date;  // NEW: track what period this insight covers
+  periodEnd       : Date;  // NEW: track what period this insight covers
+  insightType     : String(50) default '12-Month Analysis';  // NEW: type of analysis
 }
 

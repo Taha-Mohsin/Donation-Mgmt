@@ -7,7 +7,6 @@ service donation_MgmtSrv {
   
   @odata.draft.enabled
   entity Donations as projection on my.Donations actions {
-    // Bound action - works in both draft and active instances
     @(
       Common.SideEffects: {
         TargetProperties: ['summary']
@@ -16,10 +15,10 @@ service donation_MgmtSrv {
     action generateThankYouMessage() returns { message: String; };
   };
 
-  @readonly
-    entity Analytics as projection on my.Analytics actions {
-      action refresh();
-    };
-
+  // NOW WITH DRAFT AND CREATE ENABLED
+  @odata.draft.enabled
+  entity Analytics as projection on my.Analytics actions {
+    // Action to generate and save a new insight
+    action generate() returns Analytics;
+  };
 }
-  
